@@ -217,7 +217,7 @@
       				    window.clearInterval(loadingSignComponentInterval);
       				    if (!running) {
 	      				    running = true;
-	      				    signFrame.contentWindow.doSign(signForm.dataToSign, signForm.signedData, signForm.signerRole);
+	      				    signFrame.contentWindow.waitToSign(signForm.dataToSign, signForm.signedData, signForm.signerRole);
 	      				}
       				}
 	      		};
