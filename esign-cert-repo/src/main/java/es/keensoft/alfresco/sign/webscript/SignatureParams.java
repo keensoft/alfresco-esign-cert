@@ -28,6 +28,8 @@ public class SignatureParams extends AbstractWebScript {
 	private String fourthSignaturePosition;
 	private String fifthSignaturePosition;
 	
+	private Boolean useServerTime;
+	
 	@Override
 	public void execute(WebScriptRequest req, WebScriptResponse res) throws IOException {
 		
@@ -45,6 +47,7 @@ public class SignatureParams extends AbstractWebScript {
 			response.setThirdSignaturePosition(thirdSignaturePosition);
 			response.setFourthSignaturePosition(fourthSignaturePosition);
 			response.setFifthSignaturePosition(fifthSignaturePosition);
+			response.setUseServerTime(useServerTime);
 			
 		} catch (Exception e) {
 			
@@ -84,8 +87,12 @@ public class SignatureParams extends AbstractWebScript {
 	public void setFourthSignaturePosition(String fourthSignaturePosition) {
 		this.fourthSignaturePosition = fourthSignaturePosition;
 	}
-	
+
 	public void setFifthSignaturePosition(String fifthSignaturePosition) {
 		this.fifthSignaturePosition = fifthSignaturePosition;
+	}
+	
+	public void setUseServerTime(Boolean useServerTime) {
+		this.useServerTime = useServerTime;
 	}
 }

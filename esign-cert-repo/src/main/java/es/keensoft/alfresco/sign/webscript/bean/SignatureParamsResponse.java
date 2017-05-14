@@ -11,6 +11,8 @@ public class SignatureParamsResponse {
 	private String fourthSignaturePosition;
 	private String fifthSignaturePosition;
 	
+	private Boolean useServerTime;
+	
 	public String getParamsCades() {
 		return paramsCades;
 	}
@@ -25,12 +27,10 @@ public class SignatureParamsResponse {
 	}
 	public String getSignatureAlg() {
 		return signatureAlg;
-	}
+	}	
 	public void setSignatureAlg(String signatureAlg) {
 		this.signatureAlg = signatureAlg;
 	}
-
-
 	public String getFirstSignaturePosition() {
 		return firstSignaturePosition;
 	}
@@ -61,5 +61,10 @@ public class SignatureParamsResponse {
 	public void setFifthSignaturePosition(String fifthSignaturePosition) {
 		this.fifthSignaturePosition = fifthSignaturePosition;
 	}
-
+	public Boolean getUseServerTime() {
+		return useServerTime;
+	}
+	public void setUseServerTime(Boolean useServerTyme){
+		this.useServerTime = useServerTyme;
+	}
 }
