@@ -1,0 +1,69 @@
+<extension>
+	<modules>
+		<module>
+			<id>eSign Actions Share</id>
+			<version>1.0</version>
+			<auto-deploy>true</auto-deploy>
+			<configurations>
+			
+				<config evaluator="string-compare" condition="DocumentLibrary">
+					<indicators>
+						<indicator id="indicator.signed" index="1"
+							icon="sign-action-icon-16.png" label="indicator.signed">
+							<evaluator>evaluator.doclib.action.signed</evaluator>
+						</indicator>
+					</indicators>
+				</config>
+			
+				<config evaluator="string-compare" condition="DocLibActions">
+					<actions>
+						<action id="sign-action-pdf" icon="sign-action-icon" type="javascript"
+							label="actions.sign-action.pdf">
+							<permissions>
+								<permission allow="true">Write</permission>
+							</permissions>
+							<param name="function">onActionSign</param>
+							<param name="successMessage">message.sign-action.success</param>
+							<param name="failureMessage">message.sign-action.failure</param>
+							<param name="mimeType">pdf</param>
+							<evaluator>evaluator.doclib.action.pdfMimetype</evaluator>
+							<evaluator negate="true">evaluator.doclib.action.allSigners</evaluator>
+						</action>
+			
+						<action id="sign-action-other" icon="sign-action-icon" type="javascript"
+							label="actions.sign-action.other">
+							<permissions>
+								<permission allow="true">Write</permission>
+							</permissions>
+							<param name="function">onActionSign</param>
+							<param name="successMessage">message.sign-action.success</param>
+							<param name="failureMessage">message.sign-action.failure</param>
+							<param name="mimeType">other</param>
+							<evaluator>evaluator.doclib.action.signOtherDocs</evaluator>
+							<evaluator negate="true">evaluator.doclib.action.pdfMimetype</evaluator>
+							<evaluator negate="true">evaluator.doclib.action.signed</evaluator>
+							<evaluator negate="true">evaluator.doclib.action.signature</evaluator>
+						</action>
+					</actions>
+					<actionGroups>
+						<actionGroup id="document-browse">
+							<action index="600" id="sign-action-pdf" />
+							<action index="600" id="sign-action-other" />
+						</actionGroup>
+						<actionGroup id="document-details">
+							<action index="600" id="sign-action-pdf" />
+							<action index="600" id="sign-action-other" />
+						</actionGroup>
+					</actionGroups>
+				</config>
+			
+				<config evaluator="string-compare" condition="DocLibCustom">
+					<dependencies>
+						<js src="components/documentlibrary/sign-action.js" />
+					</dependencies>
+				</config>
+				
+			</configurations>
+		</module>
+	</modules>
+</extension>

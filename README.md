@@ -14,7 +14,7 @@ java -jar alfresco-mmt.jar uninstall sign-document-share ../tomcat/webapps/share
 
 ## esign-cert features
 
-**AutoFirma** local application for computers is currently supported only for Windows, but Mac OS and Linux versions are on the roadmap. This Windows application shall be installed before using the addon.
+**AutoFirma** local application for computers is currently supported only for Windows, Mac OS and Linux. Available at [AutoFirma](http://firmaelectronica.gob.es/Home/Descargas.html)
 
 **Cliente movil @firma** local application for devices is currently supported for iOS and Android:
 * Google Play - [Cliente movil @firma](https://play.google.com/store/apps/details?id=es.gob.afirma)
@@ -24,18 +24,18 @@ Currently following browser and OS combinations are supported:
 
 Windows
 * IE Edge: not supported by now
-* IE Classic: Local application
+* IE Classic: Local application / Applet
 * Google Chrome: Local application
-* Mozilla Firefox: Local application / Applet
+* Mozilla Firefox: Local application
 
 Mac OS 
 * Mozilla Firefox: Applet
-* Apple Safari: Applet
-* Google Chrome: Local application (not yet available)
+* Apple Safari: Local application (currently not working)
+* Google Chrome: Local application (currently not working)
 
 Linux Ubuntu
-* Mozilla Firefox: Applet
-* Google Chrome: Local application (not yet available)
+* Mozilla Firefox: Local application
+* Google Chrome: Local application
 
 iOS
 * Apple Safari: Local application
@@ -52,15 +52,15 @@ This module uses a software digital certificate or a cryptographic hardware supp
 The plugin is licensed under the [LGPL v3.0](http://www.gnu.org/licenses/lgpl-3.0.html). 
 
 **State**
-Current addon release 1.0.0 is ***PROD***
+Current addon release 1.5.2 is ***PROD***
 
 **Compatibility**
-The current version has been developed using Alfresco 5.1 and Alfresco SDK 2.1.1, although it should run in Alfresco 5.0.d and Alfresco 5.0.c
+The current version has been developed using Alfresco 5.0.d and Alfresco SDK 2.1.1, although it runs in Alfresco 5.1.x
 
 Browser compatibility: 100% supported (refer previous paragraph)
 
 **Languages**
-Currently provided in English,Spanish and Macedonian.
+Currently provided in English,Spanish, Macedonian and Brazilian Portuguese.
 
 ***No original Alfresco resources have been overwritten***
 
@@ -69,10 +69,10 @@ Downloading the ready-to-deploy-plugin
 --------------------------------------
 The binary distribution is made of two amp files:
 
-* [repo AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.0.0/esign-cert-repo.amp)
-* [share AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.0.0/esign-cert-share.amp)
+* [repo AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.5.2/esign-cert-repo.amp)
+* [share AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.5.2/esign-cert-share.amp)
 
-You can install them by using standard [Alfresco deployment tools](http://docs.alfresco.com/community/tasks/dev-extensions-tutorials-simple-module-install-amp.html)
+You can install them by using standard [Alfresco deployment tools](http://docs.alfresco.com/community/tasks/amp-install.html)
 
 
 Building the artifacts
@@ -87,7 +87,13 @@ Signing the applet
 ------------------
 You can download plain applet from http://forja-ctt.administracionelectronica.gob.es/web/clienteafirma
 
-Oracle [jarsigner](http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html) can be used to perform a signature on [miniapplet-full_1_4.jar](https://github.com/keensoft/alfresco-esign-cert/raw/master/esign-cert-share/src/main/amp/web/sign/miniapplet-full_1_4.jar). To deploy this change, just replace current JAR for your signed JAR and rebuild the artifacts.
+Oracle [jarsigner](http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html) can be used to perform a signature on [miniapplet-full_1_4.jar](https://github.com/keensoft/alfresco-esign-cert/raw/master/esign-cert-share/src/main/amp/web/sign/miniapplet-full_1_5.jar). To deploy this change, just replace current JAR for your signed JAR and rebuild the artifacts.
+
+Below a sample `jarsigner` invocation is provided
+
+```
+$ jarsigner -storetype pkcs12 -keystore keensoft_sign_code_valid-until_20170811.pfx miniapplet-full_1_5.jar -tsa http://tss.accv.es:8318/tsa te-9b5d5438-2bb6-435f-8542-6d711bc9784f
+```
 
 
 Running under SSL
@@ -111,19 +117,50 @@ Configuration
 ----------------------
 Before installation, following properties must be included in **alfresco-global.properties**
 
+**Sample configuration 1**
+
 ```
 # Native @firma parameters separated by tab (\t)
 esign.cert.params.pades=signaturePage=1\tsignaturePositionOnPageLowerLeftX=120\tsignaturePositionOnPageLowerLeftY=50\tsignaturePositionOnPageUpperRightX=220\tsignaturePositionOnPageUpperRightY=150\t
 esign.cert.params.cades=mode=explicit
 # Signature algorithm: SHA1withRSA, SHA256withRSA, SHA384withRSA, SHA512withRSA
 esign.cert.signature.alg=SHA512withRSA
-esign.cert.params.firstSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=40\tsignaturePositionOnPageLowerLeftY=30\tsignaturePositionOnPageUpperRightX=130\tsignaturePositionOnPageUpperRightY=130\t
-esign.cert.params.secondSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=145\tsignaturePositionOnPageLowerLeftY=30\tsignaturePositionOnPageUpperRightX=235\tsignaturePositionOnPageUpperRightY=130\t
-esign.cert.params.thirdSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=250\tsignaturePositionOnPageLowerLeftY=30\tsignaturePositionOnPageUpperRightX=340\tsignaturePositionOnPageUpperRightY=130\t
-esign.cert.params.fourthSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=335\tsignaturePositionOnPageLowerLeftY=30\tsignaturePositionOnPageUpperRightX=445\tsignaturePositionOnPageUpperRightY=130\t
-esign.cert.params.fifthSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=460\tsignaturePositionOnPageLowerLeftY=30\tsignaturePositionOnPageUpperRightX=560\tsignaturePositionOnPageUpperRightY=130\t
+esign.cert.params.firstSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=50\tsignaturePositionOnPageLowerLeftY=45\tsignaturePositionOnPageUpperRightX=305\tsignaturePositionOnPageUpperRightY=69\t
+esign.cert.params.secondSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=310\tsignaturePositionOnPageLowerLeftY=45\tsignaturePositionOnPageUpperRightX=565\tsignaturePositionOnPageUpperRightY=69\t
+esign.cert.params.thirdSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=50\tsignaturePositionOnPageLowerLeftY=23\tsignaturePositionOnPageUpperRightX=305\tsignaturePositionOnPageUpperRightY=47\t
+esign.cert.params.fourthSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=310\tsignaturePositionOnPageLowerLeftY=23\tsignaturePositionOnPageUpperRightX=565\tsignaturePositionOnPageUpperRightY=47\t
+esign.cert.params.fifthSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=50\tsignaturePositionOnPageLowerLeftY=1\tsignaturePositionOnPageUpperRightX=305\tsignaturePositionOnPageUpperRightY=25\t
+esign.cert.params.sixthSignaturePosition=signaturePage={page}\tsignaturePositionOnPageLowerLeftX=310\tsignaturePositionOnPageLowerLeftY=1\tsignaturePositionOnPageUpperRightX=565\tsignaturePositionOnPageUpperRightY=25\t
 
+# Property for disable sign other docs
+esign.cert.signOtherDocs=false
 
+# Sign Purpose (Default enabled=false)
+esign.cert.params.signPurpose.enabled=false
+```
+
+If no signature position selection form is required, `signaturePosition` properties must be declared blank. PDF signature will be performed by using `esign.cert.params.pades` in this scenario.
+
+**Sample configuration 2**
+
+```
+# Native @firma parameters separated by tab (\t)
+esign.cert.params.pades=signaturePage=1\tsignaturePositionOnPageLowerLeftX=120\tsignaturePositionOnPageLowerLeftY=50\tsignaturePositionOnPageUpperRightX=220\tsignaturePositionOnPageUpperRightY=150\t
+esign.cert.params.cades=mode=explicit
+# Signature algorithm: SHA1withRSA, SHA256withRSA, SHA384withRSA, SHA512withRSA
+esign.cert.signature.alg=SHA512withRSA
+esign.cert.params.firstSignaturePosition=
+esign.cert.params.secondSignaturePosition=
+esign.cert.params.thirdSignaturePosition=
+esign.cert.params.fourthSignaturePosition=
+esign.cert.params.fifthSignaturePosition=
+esign.cert.params.sixthSignaturePosition=
+
+# Property for disable sign other docs
+esign.cert.signOtherDocs=false
+
+# Sign Purpose (Default enabled=false)
+esign.cert.params.signPurpose.enabled=false
 ```
 
 Usage
@@ -142,7 +179,8 @@ Caducity: Tue 12 Apr 2016
 Issuer: OU=FNMT Clase 2 CA, O=FNMT, C=ES
 ```
 
-PDF files can be signed up to 5 times on 5 different positions. Once a PDF is signed in a certain position that position is no longer available for signing. The signatures positions are defined in **alfresco-global.properties**.
+PDF files can be signed up to 6 times on 6 different positions. Once a PDF is signed in a certain position that position is no longer available for signing. The signatures positions are defined in **alfresco-global.properties**.
+
 Todo
 ----------------------
 Pending features to be included (aka "wishlist"):
@@ -156,6 +194,10 @@ Pending features to be included (aka "wishlist"):
 
 ## Contributors
 
-* Douglas CR Paes
+* Daniel E. Fernández
+* Douglas C. R. Paes
 * Vasil Iliev
 * Pedro González
+* Alberto Ramírez Losilla
+* Mikel Asla
+* Maria Tsiakmaki

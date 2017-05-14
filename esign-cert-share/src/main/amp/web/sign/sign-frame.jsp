@@ -5,16 +5,25 @@
 </head>
 
 <body>	
-	<script type="text/javascript">
+	<script type="text/javascript" charset="UTF-8">
 	
 	    MiniApplet.cargarMiniApplet('<%=request.getScheme() + "://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath()%>/sign');
 	    
 	    var signatureAlg = '<%=request.getParameter("signatureAlg")%>';
-	    
+	    var signaturePurpose = null;
+        <% if (request.getParameter("signReason") != null) { %>
+	        signaturePurpose = '<%=request.getParameter("signReason")%>';
+        <% } %>
+	    	    
 	    <% if (request.getParameter("mimeType").equals("pdf")) { %>
 	    
 	        var str = '<%=request.getParameter("paramsPades")%>';
 	        str = str.split('\t').join('\n');
+	        
+	        if (signaturePurpose)
+	        {
+	        	str = str.concat('\nsignReason=' + unicodeEscape(signaturePurpose));
+	        }
 			
 			function doSign(dataToSign, signedData, signerRole) {
 				signedData.value = MiniApplet.sign(dataToSign.value, 
@@ -40,6 +49,15 @@
 			}
 
 		<% } %>
+		
+		function unicodeEscape(str)
+  		{
+			for (var result = '', index = 0, charCode; !isNaN(charCode = str.charCodeAt(index++));) 
+			{
+				result += '\\u' + ('0000' + charCode.toString(16)).slice(-4);
+			}
+			return result;
+		}
 		
 	</script>		
 </body>

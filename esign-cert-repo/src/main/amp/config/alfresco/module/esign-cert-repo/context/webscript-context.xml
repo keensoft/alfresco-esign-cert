@@ -42,11 +42,12 @@
         <property name="fourthSignaturePosition" value="${esign.cert.params.fourthSignaturePosition}" />
         <property name="fifthSignaturePosition" value="${esign.cert.params.fifthSignaturePosition}" />
         <property name="useServerTime" value="${esign.cert.params.useServerTime}" />
+        <property name="sixthSignaturePosition" value="${esign.cert.params.sixthSignaturePosition}" />
+        <property name="signaturePurposeEnabled" value="${esign.cert.params.signPurpose.enabled}"/>
     </bean>
     
 	<bean id="webscript.es.keensoft.sign.webscripts.signature-metadata.get"
 		class="es.keensoft.alfresco.sign.webscript.SignatureMetadata" parent="webscript">
 		<property name="nodeService" ref="NodeService" />
-	</bean>
-    
+	</bean>    
 </beans>

@@ -17,6 +17,12 @@
     limitations under the License.
 -->
 <beans>
+
+	<!-- Return property signOtherDocs from alfresco-global.properties -->
+	<bean id="webscript.es.alfatec.signOtherDocsProperty.get"
+	      class="es.alfatec.alfresco.webscripts.SignOtherDocsProperty" parent="webscript">
+	    <property name="signOtherDocs" value="${esign.cert.signOtherDocs}" />
+	</bean>
    
 	<bean id="signCustomBehavior" class="es.keensoft.alfresco.behaviour.CustomBehaviour" init-method="init" depends-on="esign-cert-repo.dictionaryBootstrap">
 		  <property name="policyComponent" ref="policyComponent" />

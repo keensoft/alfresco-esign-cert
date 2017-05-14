@@ -10,6 +10,8 @@ public class SignatureParamsResponse {
 	private String thirdSignaturePosition;
 	private String fourthSignaturePosition;
 	private String fifthSignaturePosition;
+	private String sixthSignaturePosition;
+	private boolean signaturePurposeEnabled;
 	
 	private Boolean useServerTime;
 	
@@ -61,10 +63,24 @@ public class SignatureParamsResponse {
 	public void setFifthSignaturePosition(String fifthSignaturePosition) {
 		this.fifthSignaturePosition = fifthSignaturePosition;
 	}
+
 	public Boolean getUseServerTime() {
 		return useServerTime;
 	}
 	public void setUseServerTime(Boolean useServerTyme){
 		this.useServerTime = useServerTyme;
+	}
+
+	public String getSixthSignaturePosition() {
+		return sixthSignaturePosition;
+	}
+	public void setSixthSignaturePosition(String sixthSignaturePosition) {
+		this.sixthSignaturePosition = sixthSignaturePosition;
+	}
+	public boolean isSignaturePurposeEnabled() {
+		return signaturePurposeEnabled;
+	}
+	public void setSignaturePurposeEnabled(boolean signaturePurposeEnabled) {
+		this.signaturePurposeEnabled = signaturePurposeEnabled;
 	}
 }

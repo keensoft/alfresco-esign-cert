@@ -1,8 +1,11 @@
 package es.keensoft.alfresco.behaviour;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.Serializable;
 import java.security.KeyStore;
+import java.security.Provider;
+import java.security.Security;
 import java.security.cert.X509Certificate;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +26,8 @@ import org.alfresco.service.cmr.repository.NodeService;
 import org.alfresco.service.cmr.version.VersionService;
 import org.alfresco.service.namespace.QName;
 import org.apache.commons.io.FilenameUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfPKCS7;
@@ -33,6 +38,8 @@ import es.keensoft.alfresco.model.SignModel;
 public class CustomBehaviour implements 
     NodeServicePolicies.OnDeleteAssociationPolicy, 
     NodeServicePolicies.OnCreateNodePolicy {
+	
+	private static Log logger = LogFactory.getLog(CustomBehaviour.class);
 	
 	private PolicyComponent policyComponent;
 	private NodeService nodeService;
@@ -47,7 +54,7 @@ public class CustomBehaviour implements
 				NotificationFrequency.TRANSACTION_COMMIT));
 		policyComponent.bindClassBehaviour(
 		        NodeServicePolicies.OnCreateNodePolicy.QNAME,
-		        ContentModel.PROP_CONTENT,
+		        ContentModel.TYPE_CONTENT,
 		        new JavaBehaviour(this, "onCreateNode", NotificationFrequency.TRANSACTION_COMMIT)
 		    );
 	}
@@ -57,10 +64,13 @@ public class CustomBehaviour implements
 	public void onCreateNode(ChildAssociationRef childNodeRef) {
 
 		NodeRef node = childNodeRef.getChildRef();
-		if (nodeService.exists(node)) {
+		// if onCreateNode the document hasSignedAspect, the document is being copied inside alfresco 
+		boolean hasSignedAspect = nodeService.hasAspect(node, SignModel.ASPECT_SIGNED);
+		
+		if (nodeService.exists(node) && !hasSignedAspect) {
 			ContentData contentData = (ContentData) nodeService.getProperty(node, ContentModel.PROP_CONTENT);
 			// Do this check only if the uploaded document is a PDF
-			if (contentData.getMimetype().equalsIgnoreCase("application/pdf")) {
+			if (contentData != null && contentData.getMimetype().equalsIgnoreCase("application/pdf")) {
 				ArrayList<Map<QName, Serializable>> signatures = getDigitalSignatures(node);
 				if(signatures != null) {
 					for(Map<QName, Serializable> aspectProperties : signatures) {
@@ -95,10 +105,15 @@ public class CustomBehaviour implements
 	
 	public ArrayList<Map<QName, Serializable>> getDigitalSignatures(NodeRef node) {
 		
+		InputStream is = null;
+		
 		try {
 		
 			ContentReader contentReader = contentService.getReader(node, ContentModel.PROP_CONTENT);
-			InputStream is = contentReader.getContentInputStream();
+			is = contentReader.getContentInputStream();
+			
+			// For SHA-256 and upper
+			loadBCProvider();
 			
 			PdfReader reader = new PdfReader(is);
 	        AcroFields af = reader.getAcroFields();
@@ -113,20 +128,43 @@ public class CustomBehaviour implements
 	           
 	            //Set aspect properties for each signature
 	            Map<QName, Serializable> aspectSignatureProperties = new HashMap<QName, Serializable>(); 
-	            aspectSignatureProperties.put(SignModel.PROP_DATE, pk.getSignDate().getTime());
+	            if (pk.getSignDate() != null) aspectSignatureProperties.put(SignModel.PROP_DATE, pk.getSignDate().getTime());
 	    		aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_PRINCIPAL, certificate.getSubjectX500Principal().toString());
 	    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_SERIAL_NUMBER, certificate.getSerialNumber().toString());
 	    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_NOT_AFTER, certificate.getNotAfter());
 	    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_ISSUER, certificate.getIssuerX500Principal().toString());   
 	    	    aspects.add(aspectSignatureProperties);
 	        }
+	        
+	        // As this verification can be included in a massive operation, closing files is required
+	        is.close();
+	        
 			return aspects;
 			
 		} catch (Exception e) {
-			throw new RuntimeException(e);
+			
+			// Closing stream (!)
+			try {
+			    if (is != null) is.close();
+			} catch (IOException ioe) {}
+			
+			// Not every PDF has a signature inside
+			logger.warn("No signature found!", e);
+			return null;
+			
+			// WARN: Do not throw this exception up, as it will break WedDAV PDF files uploading 
 		}
 	}
 	
+	@SuppressWarnings("rawtypes")
+	private void loadBCProvider() {
+        try {
+            Class c = Class.forName("org.bouncycastle.jce.provider.BouncyCastleProvider");
+            Security.insertProviderAt((Provider)c.newInstance(), 2000);
+        } catch(Exception e) {
+            // provider is not available
+        }		
+	}
 	
 	public PolicyComponent getPolicyComponent() {
 		return policyComponent;

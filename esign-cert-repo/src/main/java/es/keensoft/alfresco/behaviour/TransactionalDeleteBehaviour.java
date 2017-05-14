@@ -114,7 +114,9 @@ public class TransactionalDeleteBehaviour implements NodeServicePolicies.BeforeD
 	                     
 	                    @Override
 	                    public Void execute() throws Throwable {
-	                        nodeService.deleteNode(nodeToBeReviewed);
+	                        if(nodeService.exists(nodeToBeReviewed)) {
+	                    		nodeService.deleteNode(nodeToBeReviewed);
+	                    	}
 	                        return null;
 	                    }
 	                };

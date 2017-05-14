@@ -42,6 +42,10 @@ public class SignatureMetadata extends AbstractWebScript {
 			response.setCertificateSerialNumber(nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_SERIAL_NUMBER).toString());
 			response.setCertificateNotAfter((Date)nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_NOT_AFTER));
 			response.setCertificateIssuer(nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_ISSUER).toString());
+			if(nodeService.getProperty(nodeRef, SignModel.PROP_SIGNATURE_PURPOSE) != null)
+			{
+				response.setSignaturePurpose(nodeService.getProperty(nodeRef, SignModel.PROP_SIGNATURE_PURPOSE).toString());
+			}
 			
 		} catch (Exception e) {
 			

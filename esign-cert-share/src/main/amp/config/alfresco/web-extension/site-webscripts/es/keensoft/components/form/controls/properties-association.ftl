@@ -65,40 +65,85 @@
 			                 var obj = eval('(' + response.serverResponse.responseText + ')');
 			                 if (obj)
 			                 {
-					        	 YAHOO.util.Dom.get("value-${fieldHtmlId}").innerHTML = 
-					        	 YAHOO.util.Dom.get("value-${fieldHtmlId}").innerHTML + "<br/>" +
-					        	     "<div class='set-bordered-panel-heading'>${msg("panel.signature")}</div>" +
-					        	     "<div class='set-bordered-panel-body'>" +
-					        	     "<div class='form-field'>" +
-					        	     "<div class='viewmode-field'>" +  
-					        	     "<span class='viewmode-label'>${msg("prop.date")}:</span><span class='viewmode-value'>" + obj.signatureDate + "</span>" +
-					        	     "</div>" + 
-					        	     "</div>" + 
-					        	     "<div class='form-field'>" +
-					        	     "<div class='viewmode-field'>" +  
-					        	     "<span class='viewmode-label'>${msg("prop.format")}:</span><span class='viewmode-value'>" + obj.signatureFormat + "</span>" +
-					        	     "</div>" +
-					        	     "</div>"+ 
-					        	     "<div class='form-field'>" +
-					        	     "<div class='viewmode-field'>" +  
-					        	     "<span class='viewmode-label'>${msg("prop.certificate.principal")}:</span><span class='viewmode-value'>" + obj.certificatePrincipal + "</span>" +
-					        	     "</div>" + 
-					        	     "</div>"+
-					        	     "<div class='form-field'>" +
-					        	     "<div class='viewmode-field'>" +  
-					        	     "<span class='viewmode-label'>${msg("prop.certificate.serial.number")}:</span><span class='viewmode-value'>" + obj.certificateSerialNumber + "</span>" +
-					        	     "</div>" + 
-					        	     "</div>"+
-					        	     "<div class='form-field'>" +
-					        	     "<div class='viewmode-field'>" +  
-					        	     "<span class='viewmode-label'>${msg("prop.certificate.not.after")}:</span><span class='viewmode-value'>" + obj.certificateNotAfter + "</span>" +
-					        	     "</div>"+
-					        	     "</div>"+
-					        	     "<div class='form-field'>" +
-					        	     "<div class='viewmode-field'>" +  
-					        	     "<span class='viewmode-label'>${msg("prop.certificate.issuer")}:</span><span class='viewmode-value'>" + obj.certificateIssuer + "</span>" +
-					        	     "</div>"+
-					        	     "</div>";
+					        	 if(obj.signaturePurpose)
+					        	 {
+						        	 YAHOO.util.Dom.get("value-${fieldHtmlId}").innerHTML = 
+						        	 YAHOO.util.Dom.get("value-${fieldHtmlId}").innerHTML + "<br/>" +
+						        	     "<div class='set-bordered-panel-heading'>${msg("panel.signature")}</div>" +
+						        	     "<div class='set-bordered-panel-body'>" +
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.date")}:</span><span class='viewmode-value'>" + obj.signatureDate + "</span>" +
+						        	     "</div>" + 
+						        	     "</div>" + 
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.format")}:</span><span class='viewmode-value'>" + obj.signatureFormat + "</span>" +
+						        	     "</div>" +
+						        	     "</div>"+ 
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.certificate.principal")}:</span><span class='viewmode-value'>" + obj.certificatePrincipal + "</span>" +
+						        	     "</div>" + 
+						        	     "</div>"+
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.certificate.serial.number")}:</span><span class='viewmode-value'>" + obj.certificateSerialNumber + "</span>" +
+						        	     "</div>" + 
+						        	     "</div>"+
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.certificate.not.after")}:</span><span class='viewmode-value'>" + obj.certificateNotAfter + "</span>" +
+						        	     "</div>"+
+						        	     "</div>"+
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.certificate.issuer")}:</span><span class='viewmode-value'>" + obj.certificateIssuer + "</span>" +
+						        	     "</div>"+
+						        	     "</div>"+
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.purpose")}:</span><span class='viewmode-value'>" + obj.signaturePurpose + "</span>" +
+						        	     "</div>"+
+						        	     "</div>";
+					        	 }
+					        	 else
+					        	 {
+					        	 	YAHOO.util.Dom.get("value-${fieldHtmlId}").innerHTML = 
+						        	YAHOO.util.Dom.get("value-${fieldHtmlId}").innerHTML + "<br/>" +
+						        	     "<div class='set-bordered-panel-heading'>${msg("panel.signature")}</div>" +
+						        	     "<div class='set-bordered-panel-body'>" +
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.date")}:</span><span class='viewmode-value'>" + obj.signatureDate + "</span>" +
+						        	     "</div>" + 
+						        	     "</div>" + 
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.format")}:</span><span class='viewmode-value'>" + obj.signatureFormat + "</span>" +
+						        	     "</div>" +
+						        	     "</div>"+ 
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.certificate.principal")}:</span><span class='viewmode-value'>" + obj.certificatePrincipal + "</span>" +
+						        	     "</div>" + 
+						        	     "</div>"+
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.certificate.serial.number")}:</span><span class='viewmode-value'>" + obj.certificateSerialNumber + "</span>" +
+						        	     "</div>" + 
+						        	     "</div>"+
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.certificate.not.after")}:</span><span class='viewmode-value'>" + obj.certificateNotAfter + "</span>" +
+						        	     "</div>"+
+						        	     "</div>"+
+						        	     "<div class='form-field'>" +
+						        	     "<div class='viewmode-field'>" +  
+						        	     "<span class='viewmode-label'>${msg("prop.certificate.issuer")}:</span><span class='viewmode-value'>" + obj.certificateIssuer + "</span>" +
+						        	     "</div>"+
+						        	     "</div>";
+					        	 }
 			                 }
 			             }
 			          }

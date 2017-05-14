@@ -25,4 +25,6 @@ public class SignModel {
 	public static final QName PROP_CERTIFICATE_ISSUER = QName.createQName(URI, "certificateIssuer");
 	public static final QName ASSOC_DOC = QName.createQName(URI, "docAssoc");
 
+	public static final QName PROP_SIGNATURE_PURPOSE = QName.createQName(URI, "signaturePurpose");
+
 }

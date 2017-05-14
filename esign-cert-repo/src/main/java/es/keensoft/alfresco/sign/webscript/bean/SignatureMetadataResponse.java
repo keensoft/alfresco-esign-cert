@@ -10,6 +10,7 @@ public class SignatureMetadataResponse {
 	private String certificateSerialNumber;
 	private String certificateIssuer;
 	private Date certificateNotAfter;
+	private String signaturePurpose;
 	
 	public String getCertificatePrincipal() {
 		return certificatePrincipal;
@@ -46,6 +47,12 @@ public class SignatureMetadataResponse {
 	}
 	public void setSignatureFormat(String signatureFormat) {
 		this.signatureFormat = signatureFormat;
+	}
+	public String getSignaturePurpose() {
+		return signaturePurpose;
+	}
+	public void setSignaturePurpose(String signaturePurpose) {
+		this.signaturePurpose = signaturePurpose;
 	}
 
 

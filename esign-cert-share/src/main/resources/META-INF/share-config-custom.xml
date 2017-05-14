@@ -9,15 +9,18 @@
 				</field-visibility>
 				<appearance>
 					<set id="signed" appearance="bordered-panel" label-id="panel.signed" />
-					<field id="sign:type" set="signed" label-id="prop.type" read-only="true"/>
-					<field id="sign:signatureAssoc" set="signed" label-id="prop.signature.assoc" read-only="true">
-			        	<control template="/es/keensoft/components/form/controls/properties-association.ftl"/>
+					<field id="sign:type" set="signed" label-id="prop.type"
+						read-only="true" />
+					<field id="sign:signatureAssoc" set="signed" label-id="prop.signature.assoc"
+						read-only="true">
+						<control
+							template="/es/keensoft/components/form/controls/properties-association.ftl" />
 					</field>
 				</appearance>
 			</form>
 		</forms>
 	</config>
-	
+
 	<config evaluator="aspect" condition="sign:signature">
 		<forms>
 			<form>
@@ -25,94 +28,43 @@
 					<show id="sign:format" />
 					<show id="sign:date" />
 					<show id="sign:certificatePrincipal" />
-                    <show id="sign:certificateSerialNumber" />
-                    <show id="sign:certificateNotAfter" />
-                    <show id="sign:certificateIssuer" />
+					<show id="sign:certificateSerialNumber" />
+					<show id="sign:certificateNotAfter" />
+					<show id="sign:certificateIssuer" />
+					<show id="sign:signaturePurpose" />
 					<show id="sign:docAssoc" />
 				</field-visibility>
 				<appearance>
 					<set id="signature" appearance="bordered-panel" label-id="panel.signature" />
-					<field id="sign:format" set="signature" label-id="prop.format" read-only="true"/>
-					<field id="sign:date" set="signature" label-id="prop.date" read-only="true">
+					<field id="sign:format" set="signature" label-id="prop.format"
+						read-only="true" />
+					<field id="sign:date" set="signature" label-id="prop.date"
+						read-only="true">
 						<control template="/org/alfresco/components/form/controls/date.ftl">
 							<control-param name="showTime">true</control-param>
 						</control>
 					</field>
-                    <field id="sign:certificatePrincipal" set="signature" label-id="prop.certificate.principal" read-only="true"/>
-                    <field id="sign:certificateSerialNumber" set="signature" label-id="prop.certificate.serial.number" read-only="true"/>
-                    <field id="sign:certificateNotAfter" set="signature" label-id="prop.certificate.not.after" read-only="true"/>
-                    <field id="sign:certificateIssuer" set="signature" label-id="prop.certificate.issuer" read-only="true"/>
-					<field id="sign:docAssoc" set="signature" label-id="prop.original.document" read-only="true">
-			        	<control template="/org/alfresco/components/form/controls/association.ftl">
+					<field id="sign:certificatePrincipal" set="signature"
+						label-id="prop.certificate.principal" read-only="true" />
+					<field id="sign:certificateSerialNumber" set="signature"
+						label-id="prop.certificate.serial.number" read-only="true" />
+					<field id="sign:certificateNotAfter" set="signature"
+						label-id="prop.certificate.not.after" read-only="true" />
+					<field id="sign:certificateIssuer" set="signature"
+						label-id="prop.certificate.issuer" read-only="true" />
+					<field id="sign:signaturePurpose" set="signature"
+						label-id="prop.purpose" read-only="true" />
+					<field id="sign:docAssoc" set="signature" label-id="prop.original.document"
+						read-only="true">
+						<control template="/org/alfresco/components/form/controls/association.ftl">
 							<control-param name="displayMode">items</control-param>
 							<control-param name="showTargetLink">true</control-param>
 							<control-param name="compactMode">false</control-param>
-						</control>                    
+						</control>
 					</field>
 				</appearance>
 			</form>
 		</forms>
 	</config>
-		
-	<config evaluator="string-compare" condition="DocumentLibrary">
-		<indicators>
-			<indicator id="indicator.signed" index="1"
-					icon="sign-action-icon-16.png"
-					label="indicator.signed" >
-				<evaluator>evaluator.doclib.action.signed</evaluator>
-			</indicator>
-		</indicators>
-	</config>
-	
-	<config evaluator="string-compare" condition="DocLibActions">
-		<actions>
-			<action id="sign-action-pdf" icon="sign-action-icon" type="javascript"
-				label="actions.sign-action.pdf">
-				<permissions>
-					<permission allow="true">Write</permission>
-				</permissions>
-				<param name="function">onActionSign</param>
-				<param name="successMessage">message.sign-action.success</param>
-				<param name="failureMessage">message.sign-action.failure</param>
-				<param name="mimeType">pdf</param>
-				<evaluator>evaluator.doclib.action.pdfMimetype</evaluator>
-				<evaluator negate="true">evaluator.doclib.action.allSigners</evaluator>
-				<!-- This lines are commented in order for the action to be displayed for multiple signing -->
-				
-				<!-- <evaluator negate="true">evaluator.doclib.action.signed</evaluator>
-				<evaluator negate="true">evaluator.doclib.action.signature</evaluator> -->
-			</action>
-			
-			<action id="sign-action-other" icon="sign-action-icon" type="javascript"
-				label="actions.sign-action.other">
-				<permissions>
-					<permission allow="true">Write</permission>
-				</permissions>
-				<param name="function">onActionSign</param>
-				<param name="successMessage">message.sign-action.success</param>
-				<param name="failureMessage">message.sign-action.failure</param>
-				<param name="mimeType">other</param>
-				<evaluator negate="true">evaluator.doclib.action.pdfMimetype</evaluator>
-				<evaluator negate="true">evaluator.doclib.action.signed</evaluator>
-				<evaluator negate="true">evaluator.doclib.action.signature</evaluator>
-			</action>
-		</actions>
-		<actionGroups>
-			<actionGroup id="document-browse">
-				<action index="400" id="sign-action-pdf" />
-				<action index="401" id="sign-action-other" />
-			</actionGroup>
-			<actionGroup id="document-details">
-				<action index="400" id="sign-action-pdf" />
-				<action index="400" id="sign-action-other" />
-			</actionGroup>
-		</actionGroups>
-	</config>
 
-	<config evaluator="string-compare" condition="DocLibCustom">
-		<dependencies>
-			<js src="components/documentlibrary/sign-action.js" />
-		</dependencies>
-	</config>	
-	
 </alfresco-config>

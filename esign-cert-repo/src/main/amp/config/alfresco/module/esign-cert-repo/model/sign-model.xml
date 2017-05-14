@@ -54,6 +54,9 @@
                 <property name="sign:certificateIssuer">
                     <type>d:text</type>
                 </property>
+                <property name="sign:signaturePurpose">
+                	<type>d:text</type>
+                </property>
             </properties>
             <associations>
               <association name="sign:docAssoc">
