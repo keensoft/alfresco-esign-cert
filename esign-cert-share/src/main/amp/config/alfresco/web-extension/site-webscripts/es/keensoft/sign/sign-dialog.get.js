@@ -31,6 +31,16 @@ function main() {
 	model.mimeType = args.mimeType;
 	model.nodeRef = args.nodeRef;
 	model.jsonError = false;
+	
+	if(signatureParams.useServerTime == true) {
+		var dateTime = getNow();
+		var signatureFormat = "\tlayer2Text=$$SUBJECTCN$${space}" + dateTime + "\tlayer2FontSize=8";
+		model.firstSignaturePosition += signatureFormat;
+		model.secondSignaturePosition += signatureFormat;
+		model.thirdSignaturePosition += signatureFormat;
+		model.fourthSignaturePosition += signatureFormat;
+		model.fifthSignaturePosition += signatureFormat;
+	}
 }
 
 main();
@@ -45,4 +55,18 @@ function jsonConnection(url) {
 	} else {
 		return null;
 	}
+}
+
+function getNow() {
+	var now = new Date();
+	var day = now.getDate();
+	var month = now.getMonth() + 1;
+	var year = now.getFullYear();
+	var hour = now.getHours();
+	var minutes = now.getMinutes();
+	return day + "." + month + "." + year + "{space}" + formatNumber(hour) + ":" + formatNumber(minutes);
+}
+
+function formatNumber(number) {
+	return number < 9 ? '0' + number : number;
 }

@@ -27,11 +27,14 @@
 					</select>
 				</div>
 				<div style="width: 50%;  display: inline-block">
-					<div id="pageTitle">${msg("page")}</div>
+					<div id="pageTitle">${msg("page")}}</div>
 					<select id="signaturePage" style="width: 95%;">
 						<option value="last">${msg("page.last")}</option>
 						<option value="first">${msg("page.first")}</option>
 					</select>	
+					<#if serverDate??>
+					 ${serverDate}
+					</#if>
 				</div>	
 				</#if>					  								  			
 				<div id="sign-component" style="width:100%;"></div>	 
@@ -60,14 +63,20 @@
 	        </div>
 		    </#if>
 	      	<script type="text/javascript">//<![CDATA[
+	      	                                          
+		      	String.prototype.replaceAll = function(search, replacement) {
+		      	    var target = this;
+		      	    return target.replace(new RegExp(search, 'g'), replacement);
+		      	};
+		      	
 	      		var finalSignaturePosition = "${paramsPades}".replace(" ", "\t");
 	      		var options = {
-	      			"default": "${paramsPades}".replace(" ", "\t"),
-	      			"firstPosition": "${firstSignaturePosition}".replace(" ", "\t"),
-	      			"secondPosition": "${secondSignaturePosition}".replace(" ", "\t"),
-	      			"thirdPosition": "${thirdSignaturePosition}".replace(" ", "\t"),
-	      			"fourthPosition": "${fourthSignaturePosition}".replace(" ", "\t"),
-	      			"fifthPosition": "${fifthSignaturePosition}".replace(" ", "\t"),
+	      			"default": "${paramsPades}".replaceAll(" ", "\t"),
+	      			"firstPosition": "${firstSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " "),
+	      			"secondPosition": "${secondSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " "),
+	      			"thirdPosition": "${thirdSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " "),
+	      			"fourthPosition": "${fourthSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " "),
+	      			"fifthPosition": "${fifthSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " ")
 	      		};
 	      		var page = "last_page";
 	      		var documentMimetype = "${mimeType}";
