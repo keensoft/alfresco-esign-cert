@@ -9,48 +9,43 @@
 			</div>
 					
 		    <div id="info" class="yui-gd" style="padding:30px;text-align:justify;">
-				<#if mimeType == "pdf" && signaturePosition>
-					<div style="width: 50%; float:left; display: inline-block">
-						<div id="position-text">${msg("document.position")}</div>
-						<select id="signaturePlace" style="width: 95%;">
-							<#if showOptionFirstSignature>
-							<option value="sig1">${msg("select.sig1")}</option>
-							</#if>
-							<#if showOptionSecondSignature>
-							<option value="sig2">${msg("select.sig2")}</option>
-							</#if>
-							<#if showOptionThirdSignature>
-							<option value="sig3">${msg("select.sig3")}</option>
-							</#if>
-							<#if showOptionFourthSignature>
-							<option value="sig4">${msg("select.sig4")}</option>
-							</#if>
-							<#if showOptionFifthSignature>
-							<option value="sig5">${msg("select.sig5")}</option>
-							</#if>
-							<#if showOptionSixthSignature>
-							<option value="sig6">${msg("select.sig6")}</option>
-							</#if>
-						</select>
-					</div>
-					<div style="width: 50%;  display: inline-block">
-						<div id="pageTitle">${msg("page")}</div>
-						<select id="signaturePage" style="width: 95%;">
-							<option value="last">${msg("page.last")}</option>
-							<option value="first">${msg("page.first")}</option>
-						</select>
-					</div>
-					<#if signaturePurposeEnabled>
-					<div style="width: 90%;  display: inline-block; padding-top: 10px">
-						<div id="purposeTitle">${msg("purpose")}</div>
-						<textarea id="signaturePurposeText" name="signaturePurposeText" tabindex="0" rows="1" cols="50" style="width: 107%; height: 20px"></textarea>
-					</div>
+
+				<div id="loading-text" style="display:none;">${msg("document.ready")}</div>
+				<div id="loading" style="text-align:center; display: none;">
+					<img src="/share/sign/icon.gif" >
+				</div>
+				<#if mimeType == "pdf">
+				<div style="width: 50%; float:left; display: inline-block">
+					<div id="position-text">${msg("document.position")}</div>
+					<select id="signaturePlace" style="width: 95%;">
+						<#if showOptionFirstSignature>
+						<option value="sig1">${msg("select.sig1")}</option>
+						</#if>
+						<#if showOptionSecondSignature>
+						<option value="sig2">${msg("select.sig2")}</option>
+						</#if>
+						<#if showOptionThridSignature>
+						<option value="sig3">${msg("select.sig3")}</option>
+						</#if>
+						<#if showOptionFourthSignature>
+						<option value="sig4">${msg("select.sig4")}</option>
+						</#if>
+						<option value="sig5">${msg("select.sig5")}</option>
+					</select>
+				</div>
+				<div style="width: 50%;  display: inline-block">
+					<div id="pageTitle">${msg("page")}}</div>
+					<select id="signaturePage" style="width: 95%;">
+						<option value="last">${msg("page.last")}</option>
+						<option value="first">${msg("page.first")}</option>
+					</select>	
+					<#if serverDate??>
+					 ${serverDate}
 					</#if>
-				</#if>
-			</div>
-			
-			<div id="sign-component" style="width:100%;"></div>
-					
+				</div>	
+				</#if>					  								  			
+				<div id="sign-component" style="width:100%;"></div>	 
+			</div>			
 			<form id="signDialog-form" action="" method="POST">
 				<input type="hidden" id="dataToSign" name="dataToSign" value="${base64NodeContent}" />
 				<input type="hidden" id="signedData" name="signedData" value="" />
@@ -78,16 +73,21 @@
 		        </div>
 		    </#if>
 	      	<script type="text/javascript">//<![CDATA[
-	      	 
+	      	                                          
+		      	String.prototype.replaceAll = function(search, replacement) {
+		      	    var target = this;
+		      	    return target.replace(new RegExp(search, 'g'), replacement);
+		      	};
+		      	
 	      		var finalSignaturePosition = "${paramsPades}".replace(" ", "\t");
 	      		var options = {
-	      			"default": "${paramsPades}".replace(" ", "\t"),
-	      			"firstPosition": "${firstSignaturePosition}".replace(" ", "\t"),
-	      			"secondPosition": "${secondSignaturePosition}".replace(" ", "\t"),
-	      			"thirdPosition": "${thirdSignaturePosition}".replace(" ", "\t"),
-	      			"fourthPosition": "${fourthSignaturePosition}".replace(" ", "\t"),
-	      			"fifthPosition": "${fifthSignaturePosition}".replace(" ", "\t"),
-	      			"sixthPosition": "${sixthSignaturePosition}".replace(" ", "\t"),
+	      			"default": "${paramsPades}".replaceAll(" ", "\t"),
+	      			"firstPosition": "${firstSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " "),
+	      			"secondPosition": "${secondSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " "),
+	      			"thirdPosition": "${thirdSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " "),
+	      			"fourthPosition": "${fourthSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " "),
+	      			"fifthPosition": "${fifthSignaturePosition}".replaceAll(" ", "\t").replaceAll("{space}", " ")
+
 	      		};
 	      		var page = "last_page";
 	      		var documentMimetype = "${mimeType}";

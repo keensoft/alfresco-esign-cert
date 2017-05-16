@@ -41,6 +41,7 @@
         <property name="thirdSignaturePosition" value="${esign.cert.params.thirdSignaturePosition}" />
         <property name="fourthSignaturePosition" value="${esign.cert.params.fourthSignaturePosition}" />
         <property name="fifthSignaturePosition" value="${esign.cert.params.fifthSignaturePosition}" />
+        <property name="useServerTime" value="${esign.cert.params.useServerTime}" />
         <property name="sixthSignaturePosition" value="${esign.cert.params.sixthSignaturePosition}" />
         <property name="signaturePurposeEnabled" value="${esign.cert.params.signPurpose.enabled}"/>
     </bean>
