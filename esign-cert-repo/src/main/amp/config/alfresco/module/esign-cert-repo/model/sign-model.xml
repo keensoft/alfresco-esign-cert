@@ -72,6 +72,26 @@
                </association>
             </associations>
         </aspect>
+        <aspect name="sign:firstSignature">
+        	<title>Document is signed in First Position</title>
+        </aspect>
+        <aspect name="sign:secondSignature">
+        	<title>Document is signed in Second Position</title>
+        </aspect>
+        <aspect name="sign:thirdSignature">
+        	<title>Document is signed in Third Position</title>
+        </aspect>
+        <aspect name="sign:fourthSignature">
+        	<title>Document is signed in Fourth Position</title>
+        </aspect>
+        <aspect name="sign:fifthSignature">
+        	<title>Document is signed in Fifth Position</title>
+        </aspect>
+        <aspect name="sign:sixthSignature">
+        	<title>Document is signed in Sixth Position</title>
+        </aspect>
+        
+    
         
     </aspects>	
 	

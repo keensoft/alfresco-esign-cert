@@ -94,6 +94,10 @@ public class SaveSign extends AbstractWebScript {
 			if (request.getMimeType().equals(PDF_EXTENSION)) { // PAdES
 			    storeSignPDF(nodeRef, request.getSignedData(), request.getSignaturePurpose(), aspectSignatureProperties);
 			    aspectSignedProperties.put(SignModel.PROP_TYPE, I18NUtil.getMessage("signature.implicit"));
+			    if(request.getSignerPostition() != null)
+			    {
+			    	handleSignedPositionAspect(nodeRef, request.getSignerPostition());
+			    }
 			} else { // CAdES
 			    storeSignOther(nodeRef, request.getSignedData(), request.getSignaturePurpose(), aspectSignatureProperties);
 			    aspectSignedProperties.put(SignModel.PROP_TYPE, I18NUtil.getMessage("signature.explicit"));
@@ -207,6 +211,30 @@ public class SaveSign extends AbstractWebScript {
 	    return aspectSignatureProperties;
 	}
 	
+	private void handleSignedPositionAspect(NodeRef nodeRef, String signerPostition) {
+		switch (signerPostition)
+		{
+		case "1":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_FIRST_POSITION_SIGNED, null);
+			break;
+		case "2":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_SECOND_POSITION_SIGNED, null);
+			break;
+		case "3":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_THIRD_POSITION_SIGNED, null);
+			break;
+		case "4":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_FOURTH_POSITION_SIGNED, null);
+			break;
+		case "5":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_FIFTH_POSITION_SIGNED, null);
+			break;
+		case "6":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_SIXTH_POSITION_SIGNED, null);
+			break;
+		}
+		
+	}	
 	
 	public CheckOutCheckInService getCheckOutCheckInService() {
 		return checkOutCheckInService;
