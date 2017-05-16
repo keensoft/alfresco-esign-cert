@@ -49,6 +49,10 @@
 			}
 
 		<% } %>
+
+		function waitToSign(dataToSign, signedData, signerRole) {
+			setTimeout(function(){ doSign(dataToSign, signedData, signerRole); }, 2000);
+		}
 		
 		function unicodeEscape(str)
   		{
