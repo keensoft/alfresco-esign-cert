@@ -193,7 +193,9 @@
 	      				window.clearInterval(loadingFrameInterval);
 	      				var iframeURL = encodeURI("/share/sign/sign-frame.jsp?mimeType=${mimeType}&paramsCades=${paramsCades}&paramsPades=" + finalSignaturePosition + "&signatureAlg=${signatureAlg}");
 	      				<#if signaturePurposeEnabled>
-	      					iframeURL = iframeURL.concat("&signReason=" + unicodeEscape(signaturePurposeValue));
+	      					if(signaturePurposeValue!=null){
+	      						iframeURL = iframeURL.concat("&signReason=" + unicodeEscape(signaturePurposeValue));
+	      					}
 	      				</#if>
 	      				YAHOO.util.Dom.get("sign-component").innerHTML="<iframe scrolling='no' frameborder='0' allowTransparency='true' id='sign-frame' src='" + iframeURL + "' style='overflow:hidden;width:100%;border:none;height:0px;' />";
 	      				loadingSignComponentInterval = window.setInterval(doSign, 500);
