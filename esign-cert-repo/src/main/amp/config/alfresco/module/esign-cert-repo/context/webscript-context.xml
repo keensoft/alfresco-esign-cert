@@ -48,5 +48,20 @@
 	<bean id="webscript.es.keensoft.sign.webscripts.signature-metadata.get"
 		class="es.keensoft.alfresco.sign.webscript.SignatureMetadata" parent="webscript">
 		<property name="nodeService" ref="NodeService" />
-	</bean>    
+	</bean>   
+	
+	<!-- Return properties from alfresco-global.properties -->
+	<bean id="webscript.es.alfatec.getAlfatecCustomProperties.get"
+	      class="es.alfatec.alfresco.webscripts.GetAlfatecCustomProperties" parent="webscript">
+	    <property name="signOtherDocs" value="${esign.cert.signOtherDocs}" />
+	    <property name="defaultCSVPlace" value="${esign.download.signature.report.default.csv.place}" />
+	    <property name="defaultSignatureInfoPlace" value="${esign.download.signature.report.default.signature.info.place}" />
+	    
+	</bean>
+	
+	<bean id="webscript.es.alfatec.downloadSignatureReport.post" class="es.alfatec.alfresco.webscripts.DownloadSignatureReport" parent="webscript">
+        <property name="nodeService" ref="NodeService" />
+        <property name="alfatecSignUtils" ref="AlfatecSignUtils" />
+        <property name="waterMarkUtils" ref="WaterMarkUtils" />
+    </bean> 
 </beans>

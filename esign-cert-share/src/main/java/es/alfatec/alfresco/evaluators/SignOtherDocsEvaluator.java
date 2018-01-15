@@ -35,7 +35,7 @@ public class SignOtherDocsEvaluator  extends BaseEvaluator{
 				//Get signOtherDocs property form alfresco-global.properties calling web service REST /alfatec/alfresco-global/signOtherDoc
 				Connector connector = requestContext.getServiceRegistry().getConnectorService().getConnector("alfresco",userId ,ServletUtil.getSession());
 				
-				Response response = connector.call("/alfatec/alfresco-global/signOtherDocs");
+				Response response = connector.call("/alfatec/alfresco-global/getAlfatecCustomProperties");
 				
 				if(response.getStatus().getCode() == Status.STATUS_OK){
 					

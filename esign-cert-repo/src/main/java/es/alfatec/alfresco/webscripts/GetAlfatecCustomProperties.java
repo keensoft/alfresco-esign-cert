@@ -8,17 +8,20 @@ import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
 import org.springframework.http.MediaType;
 
-public class SignOtherDocsProperty extends AbstractWebScript{
+public class GetAlfatecCustomProperties extends AbstractWebScript{
 
 	private String signOtherDocs;
+	private String defaultCSVPlace;
+	private String defaultSignatureInfoPlace;
 	
 	@SuppressWarnings("unchecked")
 	@Override
-	public void execute(WebScriptRequest request, WebScriptResponse response)
-			throws IOException {
+	public void execute(WebScriptRequest request, WebScriptResponse response) throws IOException {
 
 		JSONObject obj = new JSONObject();
         obj.put("signOtherDocs", signOtherDocs);
+        obj.put("defaultCSVPlace", defaultCSVPlace);
+        obj.put("defaultSignatureInfoPlace",defaultSignatureInfoPlace);
          
         String jsonString = obj.toString();
         response.setContentEncoding("UTF-8");
@@ -27,11 +30,13 @@ public class SignOtherDocsProperty extends AbstractWebScript{
 		
 	}
 
-
 	public void setSignOtherDocs(String signOtherDocs) {
 		this.signOtherDocs = signOtherDocs;
 	}
-
-	
-	
+	public void setDefaultCSVPlace(String defaultCSVPlace) {
+		this.defaultCSVPlace = defaultCSVPlace;
+	}
+	public void setDefaultSignatureInfoPlace(String defaultSignatureInfoPlace) {
+		this.defaultSignatureInfoPlace = defaultSignatureInfoPlace;
+	}	
 }

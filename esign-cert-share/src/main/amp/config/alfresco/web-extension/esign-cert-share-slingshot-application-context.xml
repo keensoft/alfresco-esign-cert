@@ -19,6 +19,7 @@
 			<list>
 				<value>alfresco.web-extension.messages.sign-action</value>
 				<value>alfresco.web-extension.messages.sign-model</value>
+				<value>alfresco.web-extension.messages.download-signature-report-action</value>
 			</list>
 		</property>
 	</bean>
