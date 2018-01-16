@@ -2,19 +2,15 @@ package es.alfatec.alfresco.webscripts.bean;
 
 public class DownloadSignatureReportResponse {
 	private String nodeRef;
-	private String base64Content;
 	private String documentName;
-	private String uuid;
-	private String storeProtocol;
-	private String storeIdentifier;
+	private String signatureInfoPlace;
+	private String csvPlace;
 	
-	public DownloadSignatureReportResponse(String nodeRef, String documentName, String base64Content, String storeProtocol, String storeIdentifier, String uuid) {
+	public DownloadSignatureReportResponse(String nodeRef, String documentName, String csvPlace, String signatureInfoPlace) {
+		this.signatureInfoPlace = signatureInfoPlace;
+		this.csvPlace = csvPlace;
 		this.nodeRef = nodeRef;
 		this.documentName = documentName;
-		this.base64Content = base64Content;
-		this.storeProtocol = storeProtocol;
-		this.storeIdentifier = storeIdentifier;
-		this.uuid = uuid;
 	}
 	
 	public String getNodeRef() {
@@ -23,34 +19,22 @@ public class DownloadSignatureReportResponse {
 	public void setNodeRef(String nodeRef) {
 		this.nodeRef = nodeRef;
 	}
-	public String getBase64Content() {
-		return base64Content;
-	}
-	public void setBase64Content(String base64Content) {
-		this.base64Content = base64Content;
-	}
 	public String getDocumentName() {
 		return documentName;
 	}
 	public void setDocumentName(String documentName) {
 		this.documentName = documentName;
 	}
-	public String getUuid() {
-		return uuid;
+	public String getSignatureInfoPlace() {
+		return signatureInfoPlace;
 	}
-	public void setUuid(String uuid) {
-		this.uuid = uuid;
+	public void setSignatureInfoPlace(String signatureInfoPlace) {
+		this.signatureInfoPlace = signatureInfoPlace;
 	}
-	public String getStoreProtocol() {
-		return storeProtocol;
+	public String getCsvPlace() {
+		return csvPlace;
 	}
-	public void setStoreProtocol(String storeProtocol) {
-		this.storeProtocol = storeProtocol;
-	}
-	public String getStoreIdentifier() {
-		return storeIdentifier;
-	}
-	public void setStoreIdentifier(String storeIdentifier) {
-		this.storeIdentifier = storeIdentifier;
+	public void setCsvPlace(String csvPlace) {
+		this.csvPlace = csvPlace;
 	}
 }

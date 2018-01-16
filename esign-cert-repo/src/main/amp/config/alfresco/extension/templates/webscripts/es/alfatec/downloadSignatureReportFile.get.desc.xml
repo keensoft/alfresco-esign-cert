@@ -1,10 +1,10 @@
 <webscript>
-  <shortname>Get document signature report</shortname>
+  <shortname>Download document signature report</shortname>
   <description>It generates a report about document signature. It is a copy of document signed
-  To test: curl "http://localhost:8080/alfresco/service/alfatec/alfresco-global/downloadSignReport"
+  To test: curl "http://localhost:8080/alfresco/service/alfatec/alfresco-global/downloadSignReportFile"
   </description>
   <family>alfatec</family>
-  <url>/alfatec/alfresco-global/downloadSignReport</url>
+  <url>/alfatec/alfresco-global/downloadSignReportFile</url>
   <format default="json">any</format>
   <authentication>user</authentication>
   <transaction>none</transaction>

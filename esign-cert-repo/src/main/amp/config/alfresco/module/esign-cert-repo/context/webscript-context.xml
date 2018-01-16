@@ -59,7 +59,11 @@
 	    
 	</bean>
 	
-	<bean id="webscript.es.alfatec.downloadSignatureReport.post" class="es.alfatec.alfresco.webscripts.DownloadSignatureReport" parent="webscript">
+	<bean id="webscript.es.alfatec.signatureReportInfo.post" class="es.alfatec.alfresco.webscripts.SignatureReportInfo" parent="webscript">
+        <property name="nodeService" ref="NodeService" />
+        <property name="alfatecSignUtils" ref="AlfatecSignUtils" />
+    </bean> 
+    <bean id="webscript.es.alfatec.downloadSignatureReportFile.get" class="es.alfatec.alfresco.webscripts.DownloadSignatureReportFile" parent="webscript">
         <property name="nodeService" ref="NodeService" />
         <property name="alfatecSignUtils" ref="AlfatecSignUtils" />
         <property name="waterMarkUtils" ref="WaterMarkUtils" />

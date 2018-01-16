@@ -47,6 +47,6 @@
     
     <bean id="WaterMarkUtils" class="es.alfatec.alfresco.WaterMarkUtils">
 	    <property name="messageService" ref="messageService" />
-	    <property name="url" value="${esign.csv.url}"/>
+	    <property name="url" value="${esign.cert.csv.url}"/>
     </bean>
 </beans>

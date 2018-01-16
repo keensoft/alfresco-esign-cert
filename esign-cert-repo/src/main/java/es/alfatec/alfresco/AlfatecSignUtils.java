@@ -140,7 +140,7 @@ public class AlfatecSignUtils {
 	public File getTmpFile(NodeRef originalDocumentWithoutSignature) throws IOException, FileNotFoundException, DocumentException {
 		//Tmp file
 		File tmpDir = TempFileProvider.getTempDir();
-		String name = UUID.randomUUID().toString();
+		String name = UUID.randomUUID().toString()+".pdf";
 		File tmpFile = new File(tmpDir,name);
 		
 		PdfReader pdfReader = getNodeRefPdfReader(originalDocumentWithoutSignature);

@@ -14,23 +14,23 @@
 			this.widgets.signDialog = new Alfresco.module.SimpleDialog("downloadSignatureReport").setOptions({
 				width : "50em",
 				templateUrl : Alfresco.constants.URL_SERVICECONTEXT + "alfatec/download-signature-report/download-signature-report-dialog?nodeRef=" + record.nodeRef,
-				actionUrl : Alfresco.constants.PROXY_URI + "alfatec/alfresco-global/downloadSignReport",
+				actionUrl : Alfresco.constants.PROXY_URI + "alfatec/alfresco-global/signatureReportInfo",
 				destroyOnHide : true,
 				onSuccess : {
 					fn : function signDialog_successCallback(response) {
 						var json = eval('(' + response.serverResponse.responseText + ')');
 						if (json){
-							var uuid = json.uuid;
-							var storeProtocol = json.storeProtocol;
-							var storeIdentifier = json.storeIdentifier;
+							var nodeRef = json.nodeRef;
 							var documentName = json.documentName;
-							window.open(Alfresco.constants.PROXY_URI + "slingshot/node/content/"+storeProtocol+"/"+storeIdentifier+"/"+uuid+"/"+documentName+"?a=true");
+							var signatureInfoPlace = json.signatureInfoPlace;
+							var csvPlace = json.csvPlace;
+							window.open(Alfresco.constants.PROXY_URI + "alfatec/alfresco-global/downloadSignReportFile?nodeRef="+nodeRef+"&csvPlace="+csvPlace+"&signatureInfoPlace="+signatureInfoPlace);
 						} 
 						Alfresco.util.PopupManager.displayMessage({
 							text : this.msg("message.downloadSignReport.success"),
 							displayTime : 3
 						});
-                        //YAHOO.Bubbling.fire("metadataRefresh");
+						//YAHOO.Bubbling.fire("metadataRefresh");
 					},
 					scope : this
 				},
