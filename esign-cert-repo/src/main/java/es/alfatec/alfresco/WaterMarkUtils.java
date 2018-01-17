@@ -52,7 +52,8 @@ public class WaterMarkUtils {
 	
 	private final String _PRINT_SIGNATURE_INFO_ON_ALL_PAGES = "signature.info.all.pages";
 	private final String _PRINT_SIGNATURE_INFO_ON_FIRST_PAGE = "signature.info.first.page";
-	private final String _PRINT_SIGNATURE_INFO_ON_LAST_PAGE = "signature.info.last.page";		
+	private final String _PRINT_SIGNATURE_INFO_ON_LAST_PAGE = "signature.info.last.page";
+	private final String _NO_PRINT_SIGNATURE_INFO = "signature.info.none";
 	
 	private final String _PRINT_CSV_ON_ALL_PAGES = "csv.all.pages";
 	private final String _PRINT_CSV_ON_FIRST_PAGE = "csv.first.page";
@@ -184,7 +185,7 @@ public class WaterMarkUtils {
 				// Rectangle positions
 				float xLowerLeft = 0 + RECTANGLE_SIGN_MARGIN_X ;
 				float yLowerLeft;
-				if(_PRINT_SIGNATURE_INFO_ON_ALL_PAGES.equals(signatureInfoPlace)){
+				if(!_NO_PRINT_SIGNATURE_INFO.equals(signatureInfoPlace)){
 					yLowerLeft = 0 + RECTANGLE_SIGN_MARGIN_Y + RECTANGLE_SIGN_HEIGHT; 
 				}else{
 					yLowerLeft = 0 + RECTANGLE_SIGN_MARGIN_Y;
