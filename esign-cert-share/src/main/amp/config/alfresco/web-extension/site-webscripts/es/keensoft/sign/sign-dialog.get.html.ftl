@@ -36,8 +36,12 @@
 					<div style="width: 50%;  display: inline-block">
 						<div id="pageTitle">${msg("page")}</div>
 						<select id="signaturePage" style="width: 95%;">
-							<option value="last">${msg("page.last")}</option>
-							<option value="first">${msg("page.first")}</option>
+							<#if signLastPage>
+								<option value="last">${msg("page.last")}</option>
+							</#if>
+							<#if signFirstPage>
+								<option value="first">${msg("page.first")}</option>
+							</#if>
 						</select>
 					</div>
 					<#if signaturePurposeEnabled>
@@ -56,6 +60,7 @@
 				<input type="hidden" id="signedData" name="signedData" value="" />
 				<input type="hidden" id="signerData" name="signerData" value="" />
 				<input type="hidden" id="signerRole" name="signerRole" value="" />
+				<input type="hidden" id="signaturePageValue" name="signaturePageValue" value="" />
 				<input type="hidden" id="mimeType" name="mimeType" value="${mimeType}" />
 				<input type="hidden" id="nodeRef" name="nodeRef" value="${nodeRef}" />
 				<input type="hidden" id="signerPostition" name="signerPostition" value="" />
@@ -119,6 +124,7 @@
 	      			YAHOO.util.Dom.get("loading-text").style.display = "block";
 	      			YAHOO.util.Dom.get("loading").style.display = "block";
 
+					YAHOO.util.Dom.get("signaturePageValue").value = pageSelect;
 	      			if(position == "sig1")
 	      			{
 	      				finalSignaturePosition = options.firstPosition;

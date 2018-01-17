@@ -94,9 +94,11 @@ public class SaveSign extends AbstractWebScript {
 			if (request.getMimeType().equals(PDF_EXTENSION)) { // PAdES
 			    storeSignPDF(nodeRef, request.getSignedData(), request.getSignaturePurpose(), aspectSignatureProperties);
 			    aspectSignedProperties.put(SignModel.PROP_TYPE, I18NUtil.getMessage("signature.implicit"));
+				aspectSignedProperties.put(SignModel.PROP_SIGNATURE_PAGE, request.getSignaturePageValue());
 			} else { // CAdES
 			    storeSignOther(nodeRef, request.getSignedData(), request.getSignaturePurpose(), aspectSignatureProperties);
 			    aspectSignedProperties.put(SignModel.PROP_TYPE, I18NUtil.getMessage("signature.explicit"));
+				aspectSignedProperties.put(SignModel.PROP_SIGNATURE_PAGE, request.getSignaturePageValue());
 			}
 			nodeService.addAspect(nodeRef, SignModel.ASPECT_SIGNED, aspectSignedProperties);
 			addSignatureMark(nodeRef, request.getSignerPostition());

@@ -18,6 +18,9 @@
                 <property name="sign:type">
                     <type>d:text</type>
                 </property>
+                <property name="sign:signaturePage">
+                    <type>d:text</type>
+				</property>
                 <property name="sign:csv">
                     <type>d:text</type>
                 </property>
