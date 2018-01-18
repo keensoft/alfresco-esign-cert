@@ -21,6 +21,7 @@ import com.itextpdf.text.DocumentException;
 import es.alfatec.alfresco.AlfatecException;
 import es.alfatec.alfresco.AlfatecSignUtils;
 import es.alfatec.alfresco.WaterMarkUtils;
+import es.alfatec.alfresco.webscripts.bean.PrintSignatureInformation;
 
 public class DownloadSignatureReportFile extends AbstractWebScript {
 
@@ -51,9 +52,9 @@ public class DownloadSignatureReportFile extends AbstractWebScript {
 						
 						tmpFile = alfatecSignUtils.getTmpFile(originalDocumentWithoutSignature);
 						if(!_NO_PRINT_SIGNATURE_INFO.equals(signatureInfoPlace)){
-							List<String> signers = alfatecSignUtils.getSigners(document);
-							for(int i = 1; i <= signers.size();i++){
-								waterMarkUtils.printSign(tmpFile,signers.get(i-1), i, signatureInfoPlace);
+							List<PrintSignatureInformation> signatureOptions = alfatecSignUtils.getSignatureOptions(document);
+							for(int i = 1; i <= signatureOptions.size();i++){
+								waterMarkUtils.printSign(tmpFile,signatureOptions.get(i-1).getSignerName(), i, signatureInfoPlace, signatureOptions.get(i-1).getSignatureDate());
 							}
 						}
 						

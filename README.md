@@ -205,7 +205,7 @@ Issuer: OU=FNMT Clase 2 CA, O=FNMT, C=ES
 
 PDF files can be signed up to 6 times on 6 different positions. Once a PDF is signed in a certain position that position is no longer available for signing. The signatures positions are defined in **alfresco-global.properties**.
 
-To enable download signature report tool, is necessary set to true property **esign.download.signature.report.enabled** on alfresco-global.properties. Then, you can canfigure the default position of CSV and/or signature resume watermarks with properties **esign.download.signature.report.default.csv.place** and/or **esign.download.signature.report.default.signature.info.place**.
+To enable download signature report action, is necessary set to true property **esign.download.signature.report.enabled** on alfresco-global.properties. Then, you can configure default position of CSV and/or signature resume watermarks with properties **esign.download.signature.report.default.csv.place** and/or **esign.download.signature.report.default.signature.info.place**.
 
 Availables values are:
 
@@ -220,7 +220,11 @@ Availables values are:
 	* csv.all.pages
 	* csv.none
 
-If you don't set those properties, Alfresco asks to user the position of CSV and signature resume for printing.
+If you don't set those properties, Alfresco asks user the position of CSV and signature resume.
+
+Download signature report action is only available for nodes with next features:
+* PDF nodes.
+* Documents signed on this Alfresco instance. (Documents signed only by your organization).
 
 Todo
 ----------------------
@@ -238,8 +242,8 @@ Pending features to be included (aka "wishlist"):
 * Daniel E. Fernández
 * Douglas C. R. Paes
 * Vasil Iliev
-* Pedro González
-* Alberto Ramírez Losilla
+* [Pedro González](https://www.linkedin.com/in/pedro-gonz%C3%A1lez-cano-310b40120/)
+* [Alberto Ramírez Losilla](https://www.linkedin.com/in/alramlo/)
 * Mikel Asla
 * Maria Tsiakmaki
 * [Sergio Campoy](https://es.linkedin.com/in/sergio-campoy-arnau-79697568)

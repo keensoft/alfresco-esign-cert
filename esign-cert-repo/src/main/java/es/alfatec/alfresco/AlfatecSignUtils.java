@@ -7,7 +7,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.security.SignatureException;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
@@ -27,13 +29,13 @@ import org.alfresco.service.cmr.version.VersionService;
 import org.alfresco.util.TempFileProvider;
 import org.apache.log4j.Logger;
 
-import com.ibm.icu.util.Calendar;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
 import com.itextpdf.text.pdf.PdfPKCS7;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
 
+import es.alfatec.alfresco.webscripts.bean.PrintSignatureInformation;
 import es.keensoft.alfresco.model.SignModel;
 
 public class AlfatecSignUtils {
@@ -61,16 +63,19 @@ public class AlfatecSignUtils {
 		return signatureNames;
 	}
 	
-	public List<String> getSigners(NodeRef document) throws IOException{
-		List<String> signersName = new ArrayList<>();
+	public List<PrintSignatureInformation> getSignatureOptions(NodeRef document) throws IOException{
+		List<PrintSignatureInformation> signatureOptions = new ArrayList<>();
 		AcroFields acroFields = getDocumentAcroFields(document);
 		List<String> a = getDocumentSignatures(document);
 		for(String c:a){
 			PdfPKCS7 pkcs7 = acroFields.verifySignature(c);
 			X509Certificate cert = (X509Certificate) pkcs7.getSigningCertificate();
-			signersName.add(getDataSigner(cert));
+			Calendar cal = pkcs7.getSignDate();
+			String date = new SimpleDateFormat(" dd/MM/yyyy HH:mm").format(cal.getTime());
+			PrintSignatureInformation psi = new PrintSignatureInformation(getDataSigner(cert), date);
+			signatureOptions.add(psi);
 		}
-		return signersName;
+		return signatureOptions;
 	}
 
 	public AcroFields getDocumentAcroFields(NodeRef document) throws IOException {
@@ -180,7 +185,7 @@ public class AlfatecSignUtils {
 
 	public void setVersionService(VersionService versionService) {
 		this.versionService = versionService;
-	}
+	} 
 
 	public String generateCSV(NodeRef document) {
 		String csv = (String)nodeService.getProperty(document, SignModel.PROP_CSV);
@@ -190,9 +195,12 @@ public class AlfatecSignUtils {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime(createdDate);
 			int year = cal.get(Calendar.YEAR);
-			int month = cal.get(Calendar.MONTH);
+			int month = cal.get(Calendar.MONTH)+1;
 			int day = cal.get(Calendar.DAY_OF_MONTH);
-			csv = uuid + "-" + year + "-" + month + "-" + day;
+			int hour = cal.get(Calendar.HOUR);
+			int minute = cal.get(Calendar.MINUTE);
+			int seconds = cal.get(Calendar.SECOND);
+			csv = uuid + "-" + year + ((month < 10)?"0"+month:month) + ((day<10)?"0"+day:day) + ((hour<10)?"0"+hour:hour)+ ((minute<10)?"0"+minute:minute)+ ((seconds<10)?"0"+seconds:seconds);
 			nodeService.setProperty(document, SignModel.PROP_CSV, csv);
 		}
 		return csv;

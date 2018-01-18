@@ -4,8 +4,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 import org.alfresco.repo.i18n.MessageService;
 
@@ -59,7 +57,7 @@ public class WaterMarkUtils {
 	private final String _PRINT_CSV_ON_FIRST_PAGE = "csv.first.page";
 	private final String _PRINT_CSV_ON_LAST_PAGE = "csv.last.page";
 	
-	public void printSign(File tmpFile, String signer, Integer position, String signatureInfoPlace) throws IOException, DocumentException{
+	public void printSign(File tmpFile, String signer, Integer position, String signatureInfoPlace, String signatureDate) throws IOException, DocumentException{
 		
 		// Reader
 		FileInputStream fileInputStream = new FileInputStream(tmpFile);
@@ -94,12 +92,12 @@ public class WaterMarkUtils {
 		signerRectangle.setBorderWidth(1);
 		
 		// Text with sign information
-		String date = new SimpleDateFormat(" dd/MM/yyyy HH:mm").format(new Date());
-		if((pageSize.getHeight()>pageSize.getWidth()) && (signer.length()>39))
+		if((pageSize.getHeight()>pageSize.getWidth()) && (signer.length()>39)){
 			signer = signer.substring(0, 39)+"...";
-		else if(signer.length()>69)
+		}else if(signer.length()>69){
 				signer = signer.substring(0, 69)+"...";
-		String text = messageService.getMessage("sign.signed")+" "+signer+"   "+messageService.getMessage("sign.date")+date+" CET";
+		}
+		String text = messageService.getMessage("sign.signed")+" "+signer+"   "+messageService.getMessage("sign.date")+signatureDate+" CET";
 		Chunk chunk = new Chunk(text,FONT_SIGN); 
 		
 		// Calculation x  

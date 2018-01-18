@@ -60,6 +60,11 @@
 	    <property name="downloadSignatureReport" value="${esign.download.signature.report.enabled}" />	    
 	</bean>
 	
+	<bean id="webscript.es.alfatec.hasBeenDocumentSignedOnAlfresco.get" class="es.alfatec.alfresco.webscripts.HasBeenDocumentSignedOnAlfresco" parent="webscript">
+        <property name="nodeService" ref="NodeService" />
+        <property name="alfatecSignUtils" ref="AlfatecSignUtils" />
+    </bean>
+	
 	<bean id="webscript.es.alfatec.signatureReportInfo.post" class="es.alfatec.alfresco.webscripts.SignatureReportInfo" parent="webscript">
         <property name="nodeService" ref="NodeService" />
         <property name="alfatecSignUtils" ref="AlfatecSignUtils" />
