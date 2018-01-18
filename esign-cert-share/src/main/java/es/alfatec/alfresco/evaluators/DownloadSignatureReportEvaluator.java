@@ -10,11 +10,10 @@ import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.Response;
 
-public class SignOtherDocsEvaluator  extends BaseEvaluator{
+public class DownloadSignatureReportEvaluator  extends BaseEvaluator{
 
-	private final static String value = "true";
-	private String propertyValue = null;
-	private Boolean caseSensitive = false;
+	private final String VALUE = "true";
+	private String propertyValue = "false";
 	
 	@Override
 	public boolean evaluate(JSONObject jsonObject) {
@@ -40,32 +39,17 @@ public class SignOtherDocsEvaluator  extends BaseEvaluator{
 				if(response.getStatus().getCode() == Status.STATUS_OK){
 					
 					org.json.JSONObject json = new org.json.JSONObject(response.getResponse());
-					propertyValue = (String) json.get("signOtherDocs");
+					propertyValue = (String) json.get("downloadSignatureReport");
 				}
 				 
-				//Compare values
-				if(caseSensitive){
-					return propertyValue.equals(value);
-				}
-				else{
-					return propertyValue.equalsIgnoreCase(value);
-				}
-				
-				
+				return VALUE.equals(propertyValue);
 			}
 			
 		} catch (Exception e) {
 			
 			throw new AlfrescoRuntimeException("Failed to run action evaluator: "+e.getMessage());
-	
+
 		}
 			
 	}
-
-	public void setCaseSensitive(Boolean caseSensitive) {
-		this.caseSensitive = caseSensitive;
-	}
-
-
-
 }

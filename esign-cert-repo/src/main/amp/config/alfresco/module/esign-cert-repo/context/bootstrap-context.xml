@@ -17,6 +17,8 @@
 		<property name="resourceBundles">
 			<list>
 				<value>alfresco.module.${project.artifactId}.messages.sign-webscripts</value>
+				<value>alfresco.module.${project.artifactId}.messages.csv</value>
+				<value>alfresco.module.${project.artifactId}.messages.sign</value>
 			</list>
 		</property>
 	</bean>

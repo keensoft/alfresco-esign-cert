@@ -94,12 +94,14 @@ public class SaveSign extends AbstractWebScript {
 			if (request.getMimeType().equals(PDF_EXTENSION)) { // PAdES
 			    storeSignPDF(nodeRef, request.getSignedData(), request.getSignaturePurpose(), aspectSignatureProperties);
 			    aspectSignedProperties.put(SignModel.PROP_TYPE, I18NUtil.getMessage("signature.implicit"));
+				aspectSignedProperties.put(SignModel.PROP_SIGNATURE_PAGE, request.getSignaturePageValue());
 			} else { // CAdES
 			    storeSignOther(nodeRef, request.getSignedData(), request.getSignaturePurpose(), aspectSignatureProperties);
 			    aspectSignedProperties.put(SignModel.PROP_TYPE, I18NUtil.getMessage("signature.explicit"));
+				aspectSignedProperties.put(SignModel.PROP_SIGNATURE_PAGE, request.getSignaturePageValue());
 			}
 			nodeService.addAspect(nodeRef, SignModel.ASPECT_SIGNED, aspectSignedProperties);
-			
+			addSignatureMark(nodeRef, request.getSignerPostition());
 			response.setCode(RETURN_CODE_OK);
 			
 		} catch (Exception e) {
@@ -109,6 +111,31 @@ public class SaveSign extends AbstractWebScript {
 		res.getWriter().write(gson.toJson(response));
 	}
 	
+	private void addSignatureMark(NodeRef nodeRef, String position) {
+		Map<QName, Serializable> aspectSignedProperties = new HashMap<QName, Serializable>();
+		switch (position) {
+		case "1":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_FIRST_SIGNATURE, aspectSignedProperties);
+			break;
+		case "2":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_SECOND_SIGNATURE, aspectSignedProperties);
+			break;
+		case "3":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_THIRD_SIGNATURE, aspectSignedProperties);
+			break;
+		case "4":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_FOURTH_SIGNATURE, aspectSignedProperties);
+			break;
+		case "5":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_FIFTH_SIGNATURE, aspectSignedProperties);
+			break;
+		case "6":
+			nodeService.addAspect(nodeRef, SignModel.ASPECT_SIXTH_SIGNATURE, aspectSignedProperties);
+			break;
+		}
+		
+	}
+
 	private void storeSignOther(NodeRef originalNodeRef, String signedData, String purpose, Map<QName, Serializable> aspectProperties) throws IOException {
 		
 		NodeRef parentRef = nodeService.getPrimaryParent(originalNodeRef).getParentRef();

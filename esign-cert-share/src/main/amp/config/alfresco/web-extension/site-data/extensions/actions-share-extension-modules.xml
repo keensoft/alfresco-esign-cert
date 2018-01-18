@@ -44,6 +44,19 @@
 							<evaluator negate="true">evaluator.doclib.action.signed</evaluator>
 							<evaluator negate="true">evaluator.doclib.action.signature</evaluator>
 						</action>
+						
+						<action id="downloadSignReportAction" type="javascript" label="actions.downloadSignReportAction-action" icon="download-signature-report-icon">
+				            <param name="function">onActionDownloadSignatureReport</param>
+				            <permissions>
+				                <permission allow="true">Write</permission>
+				            </permissions>
+				            <param name="successMessage">message.downloadSignReport.success</param>
+				            <param name="failureMessage">message.downloadSignReportAction.failure</param>
+							<evaluator>evaluator.doclib.action.pdfMimetype</evaluator>
+							<evaluator>evaluator.doclib.action.signed</evaluator>
+							<evaluator>evaluator.doclib.action.downloadSignatureReport</evaluator>
+							<evaluator>evaluator.doclib.action.hasBeenDocumentSignedOnAlfresco</evaluator>
+				        </action>
 					</actions>
 					<actionGroups>
 						<actionGroup id="document-browse">
@@ -54,12 +67,19 @@
 							<action index="600" id="sign-action-pdf" />
 							<action index="600" id="sign-action-other" />
 						</actionGroup>
+						<actionGroup id="document-browse">
+			               <action index="601" id="downloadSignReportAction" />
+			           </actionGroup>
+			           <actionGroup id="document-details">
+			               <action index="601" id="downloadSignReportAction" />
+			           </actionGroup>
 					</actionGroups>
 				</config>
 			
 				<config evaluator="string-compare" condition="DocLibCustom">
 					<dependencies>
 						<js src="components/documentlibrary/sign-action.js" />
+						<js src="components/documentlibrary/download-signature-report-action.js" />
 					</dependencies>
 				</config>
 				
