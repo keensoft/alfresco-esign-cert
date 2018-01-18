@@ -43,6 +43,9 @@
 	<bean id="evaluator.doclib.action.signOtherDocs" class="es.alfatec.alfresco.evaluators.SignOtherDocsEvaluator">
 		<property name="caseSensitive" value="false"></property>
 	</bean>
+	
+	<bean id="evaluator.doclib.action.downloadSignatureReport" class="es.alfatec.alfresco.evaluators.DownloadSignatureReportEvaluator">
+	</bean>
 
 
 	<bean id="evaluator.doclib.action.allSigners" parent="evaluator.doclib.action.hasAspect">

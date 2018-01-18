@@ -54,6 +54,7 @@
 				            <param name="failureMessage">message.downloadSignReportAction.failure</param>
 							<evaluator>evaluator.doclib.action.pdfMimetype</evaluator>
 							<evaluator>evaluator.doclib.action.signed</evaluator>
+							<evaluator>evaluator.doclib.action.downloadSignatureReport</evaluator>
 				        </action>
 					</actions>
 					<actionGroups>

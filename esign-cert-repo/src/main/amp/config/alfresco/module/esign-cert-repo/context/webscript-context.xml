@@ -56,7 +56,8 @@
 	    <property name="signOtherDocs" value="${esign.cert.signOtherDocs}" />
 	    <property name="defaultCSVPlace" value="${esign.download.signature.report.default.csv.place}" />
 	    <property name="defaultSignatureInfoPlace" value="${esign.download.signature.report.default.signature.info.place}" />
-	    
+	    <property name="csvWebApplicationURL" value="${esign.csv.url}" />
+	    <property name="downloadSignatureReport" value="${esign.download.signature.report.enabled}" />	    
 	</bean>
 	
 	<bean id="webscript.es.alfatec.signatureReportInfo.post" class="es.alfatec.alfresco.webscripts.SignatureReportInfo" parent="webscript">
