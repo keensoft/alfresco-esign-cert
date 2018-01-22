@@ -3,6 +3,12 @@ esign-cert
 ==================
 Provides an Alfresco Share action for signing PDF files (PAdES-BES format) and any other file (CAdES-BES format detached) via java applet (@firma miniApplet, opensource at https://github.com/ctt-gob-es/clienteafirma) or local application AutoFirma by protocol (http://forja-ctt.administracionelectronica.gob.es/web/clienteafirma) where applets are not possible (i. e. Google Chrome).
 
+
+## PREVIOUS BACKGROUND
+
+***This addons includes a button to perform electronic signature based in electronic certificates from client computer. This addons has nothing to see with SSL or server electronic signature. Every user of Alfresco require a properly configure Personal Electronic Certificate (available to be picked from the browser) to use the addon***
+
+
 **IMPORTANT NOTICE**
 
 If you installed [alfresco-firma-pdf](https://github.com/keensoft/alfresco-firma-pdf), it's required to uninstall it before using **esign-cert** addon.
