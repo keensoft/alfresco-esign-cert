@@ -18,6 +18,12 @@
                 <property name="sign:type">
                     <type>d:text</type>
                 </property>
+                <property name="sign:signaturePage">
+                    <type>d:text</type>
+				</property>
+                <property name="sign:csv">
+                    <type>d:text</type>
+                </property>
             </properties>   
             <associations>
               <association name="sign:signatureAssoc">
@@ -73,6 +79,12 @@
             </associations>
         </aspect>
         
+        <aspect name="sign:firstSignature"></aspect>
+        <aspect name="sign:secondSignature"></aspect>
+        <aspect name="sign:thirdSignature"></aspect>
+        <aspect name="sign:fourthSignature"></aspect>
+        <aspect name="sign:fifthSignature"></aspect>
+        <aspect name="sign:sixthSignature"></aspect>
     </aspects>	
 	
 </model>

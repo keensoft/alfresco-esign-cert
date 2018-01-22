@@ -1,0 +1,11 @@
+<webscript>
+  <shortname>Check if document has been signed on Alfresco</shortname>
+  <description>Check if document has been signed on Alfresco
+  To test: curl "http://localhost:8080/alfresco/service/alfatec/alfresco-global/hasBeenDocumentSignedOnAlfresco?nodeRef={nodeRef}"
+  </description>
+  <family>alfatec</family>
+  <url>/alfatec/alfresco-global/hasBeenDocumentSignedOnAlfresco</url>
+  <format default="json">any</format>
+  <authentication>user</authentication>
+  <transaction>none</transaction>
+</webscript>

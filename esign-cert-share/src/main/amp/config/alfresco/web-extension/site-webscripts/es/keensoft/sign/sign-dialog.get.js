@@ -36,7 +36,18 @@ function main() {
 	model.showOptionFourthSignature = (aspects.current.indexOf("sign:fourthSignature") == -1);
 	model.showOptionFifthSignature = (aspects.current.indexOf("sign:fifthSignature") == -1);
 	model.showOptionSixthSignature = (aspects.current.indexOf("sign:sixthSignature") == -1);
+	
+	// Sign on same first signature page
+	model.signLastPage = true;
+	model.signFirstPage = true;
 
+	var nodeProperties = jsonConnection("/slingshot/doclib2/node/" + args.nodeRef.replace(":/", ""));
+	
+	if(nodeProperties.item.node.properties["sign:signaturePage"] != null){
+		model.signFirstPage = (nodeProperties.item.node.properties["sign:signaturePage"] == "first");
+		model.signLastPage = (nodeProperties.item.node.properties["sign:signaturePage"] == "last");
+	}
+	
 	// Fill up the model with data
 	model.base64NodeContent = base64NodeContentResponse.base64NodeContent;
 	model.mimeType = args.mimeType;

@@ -1,0 +1,8 @@
+<webscript>
+	<shortname>Generate and download document signature report dialog</shortname>
+	<description>Dialog to generate and download reports of documents signatures.</description>
+	<family>alfatec</family>
+	<url>/alfatec/download-signature-report/download-signature-report-dialog?nodeRef={nodeRef}</url>
+	<url>/alfatec/download-signature-report/download-signature-report-dialog.html?nodeRef={nodeRef}</url>	
+	<format default="html">any</format>	
+</webscript>

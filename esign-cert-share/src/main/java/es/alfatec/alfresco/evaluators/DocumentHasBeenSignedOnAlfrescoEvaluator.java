@@ -10,11 +10,7 @@ import org.springframework.extensions.webscripts.Status;
 import org.springframework.extensions.webscripts.connector.Connector;
 import org.springframework.extensions.webscripts.connector.Response;
 
-public class SignOtherDocsEvaluator  extends BaseEvaluator{
-
-	private final static String value = "true";
-	private String propertyValue = null;
-	private Boolean caseSensitive = false;
+public class DocumentHasBeenSignedOnAlfrescoEvaluator  extends BaseEvaluator{
 	
 	@Override
 	public boolean evaluate(JSONObject jsonObject) {
@@ -31,41 +27,19 @@ public class SignOtherDocsEvaluator  extends BaseEvaluator{
 				return false;
 			}
 			else{
-				
+				String nodeRef = node.get("nodeRef").toString();
 				//Get signOtherDocs property form alfresco-global.properties calling web service REST /alfatec/alfresco-global/signOtherDoc
 				Connector connector = requestContext.getServiceRegistry().getConnectorService().getConnector("alfresco",userId ,ServletUtil.getSession());
 				
-				Response response = connector.call("/alfatec/alfresco-global/getAlfatecCustomProperties");
-				
-				if(response.getStatus().getCode() == Status.STATUS_OK){
-					
-					org.json.JSONObject json = new org.json.JSONObject(response.getResponse());
-					propertyValue = (String) json.get("signOtherDocs");
-				}
-				 
-				//Compare values
-				if(caseSensitive){
-					return propertyValue.equals(value);
-				}
-				else{
-					return propertyValue.equalsIgnoreCase(value);
-				}
-				
-				
+				Response response = connector.call("/alfatec/alfresco-global/hasBeenDocumentSignedOnAlfresco?nodeRef="+nodeRef);				 
+				return response.getStatus().getCode() == Status.STATUS_OK;
 			}
 			
 		} catch (Exception e) {
 			
 			throw new AlfrescoRuntimeException("Failed to run action evaluator: "+e.getMessage());
-	
+
 		}
 			
 	}
-
-	public void setCaseSensitive(Boolean caseSensitive) {
-		this.caseSensitive = caseSensitive;
-	}
-
-
-
 }
