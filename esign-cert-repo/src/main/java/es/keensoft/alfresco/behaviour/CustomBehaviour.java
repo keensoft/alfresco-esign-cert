@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.alfresco.model.ContentModel;
+import org.alfresco.repo.content.ContentServicePolicies;
 import org.alfresco.repo.node.NodeServicePolicies;
 import org.alfresco.repo.policy.Behaviour.NotificationFrequency;
 import org.alfresco.repo.policy.JavaBehaviour;
@@ -37,7 +38,8 @@ import es.keensoft.alfresco.model.SignModel;
 
 public class CustomBehaviour implements 
     NodeServicePolicies.OnDeleteAssociationPolicy, 
-    NodeServicePolicies.OnCreateNodePolicy {
+    NodeServicePolicies.OnCreateNodePolicy,
+    ContentServicePolicies.OnContentUpdatePolicy {
 	
 	private static Log logger = LogFactory.getLog(CustomBehaviour.class);
 	
@@ -55,11 +57,13 @@ public class CustomBehaviour implements
 		policyComponent.bindClassBehaviour(
 		        NodeServicePolicies.OnCreateNodePolicy.QNAME,
 		        ContentModel.TYPE_CONTENT,
-		        new JavaBehaviour(this, "onCreateNode", NotificationFrequency.TRANSACTION_COMMIT)
-		    );
-	}
+		        new JavaBehaviour(this, "onCreateNode", NotificationFrequency.TRANSACTION_COMMIT));
+		policyComponent.bindClassBehaviour(
+		        ContentServicePolicies.OnContentUpdatePolicy.QNAME,
+		        ContentModel.TYPE_CONTENT,
+		        new JavaBehaviour(this, "onContentUpdate", NotificationFrequency.TRANSACTION_COMMIT));
+	}	
 	
-
 	@Override
 	public void onCreateNode(ChildAssociationRef childNodeRef) {
 
@@ -69,6 +73,10 @@ public class CustomBehaviour implements
 			return; 
 		}
 		
+		processSignatures(node);
+	}
+
+	private void processSignatures(NodeRef node) {
 		// if onCreateNode the document hasSignedAspect, the document is being copied inside alfresco 
 		boolean hasSignedAspect = nodeService.hasAspect(node, SignModel.ASPECT_SIGNED);
 		
@@ -105,6 +113,14 @@ public class CustomBehaviour implements
 	public void onDeleteAssociation(AssociationRef nodeAssocRef) {
 		if (nodeService.exists(nodeAssocRef.getTargetRef())) {
 		    nodeService.removeAspect(nodeAssocRef.getTargetRef(), SignModel.ASPECT_SIGNED);
+		}
+	}
+	
+	@Override
+	public void onContentUpdate(NodeRef nodeRef, boolean newContent) {
+		
+		if (nodeService.exists(nodeRef) && !newContent) {
+			processSignatures(nodeRef);
 		}
 	}
 	
