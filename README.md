@@ -6,7 +6,7 @@ Provides an Alfresco Share action for signing PDF files (PAdES-BES format) and a
 
 ## PREVIOUS BACKGROUND
 
-***This addons includes a button to perform electronic signature based in electronic certificates from client computer. This addons has nothing to see with SSL or server electronic signature. Every user of Alfresco require a properly configure Personal Electronic Certificate (available to be picked from the browser) to use the addon***
+***This addons includes a button to perform electronic signature based in electronic certificates from client computer. This addons has nothing to see with SSL or server electronic signature. Every user of Alfresco require a configured Personal Electronic Certificate (available to be picked from the browser) to use the addon***
 
 
 **IMPORTANT NOTICE**
@@ -20,7 +20,10 @@ java -jar alfresco-mmt.jar uninstall sign-document-share ../tomcat/webapps/share
 
 ## esign-cert features
 
-**AutoFirma** local application for computers is currently supported only for Windows, Mac OS and Linux. Available at [AutoFirma](http://firmaelectronica.gob.es/Home/Descargas.html)
+**AutoFirma** local application for computers is currently supported only for Windows, Mac OS and Linux. 
+
+Available for download at [AutoFirma](http://firmaelectronica.gob.es/Home/Descargas.html)
+Source code available at [clienteafirma](https://github.com/ctt-gob-es/clienteafirma)
 
 **Cliente movil @firma** local application for devices is currently supported for iOS and Android:
 * Google Play - [Cliente movil @firma](https://play.google.com/store/apps/details?id=es.gob.afirma)
@@ -58,7 +61,7 @@ This module uses a software digital certificate or a cryptographic hardware supp
 The plugin is licensed under the [LGPL v3.0](http://www.gnu.org/licenses/lgpl-3.0.html). 
 
 **State**
-Current addon release 1.5.2 is ***PROD***
+Current addon release 1.6.2 is ***PROD***
 
 **Compatibility**
 The current version has been developed using Alfresco 5.0.d and Alfresco SDK 2.1.1, although it runs in Alfresco 5.1.x
@@ -75,8 +78,8 @@ Downloading the ready-to-deploy-plugin
 --------------------------------------
 The binary distribution is made of two amp files:
 
-* [repo AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.5.2/esign-cert-repo.amp)
-* [share AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.5.2/esign-cert-share.amp)
+* [repo AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.6.2/esign-cert-repo.amp)
+* [share AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.6.2/esign-cert-share.amp)
 
 You can install them by using standard [Alfresco deployment tools](http://docs.alfresco.com/community/tasks/amp-install.html)
 
@@ -93,7 +96,7 @@ Signing the applet
 ------------------
 You can download plain applet from http://forja-ctt.administracionelectronica.gob.es/web/clienteafirma
 
-Oracle [jarsigner](http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html) can be used to perform a signature on [miniapplet-full_1_4.jar](https://github.com/keensoft/alfresco-esign-cert/raw/master/esign-cert-share/src/main/amp/web/sign/miniapplet-full_1_5.jar). To deploy this change, just replace current JAR for your signed JAR and rebuild the artifacts.
+Oracle [jarsigner](http://docs.oracle.com/javase/7/docs/technotes/tools/windows/jarsigner.html) can be used to perform a signature on [miniapplet-full_1_6_2.jar](https://github.com/keensoft/alfresco-esign-cert/raw/master/esign-cert-share/src/main/amp/web/sign/miniapplet-full_1_6_2.jar). To deploy this change, just replace current JAR for your signed JAR and rebuild the artifacts.
 
 Below a sample `jarsigner` invocation is provided
 
