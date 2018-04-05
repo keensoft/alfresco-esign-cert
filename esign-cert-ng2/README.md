@@ -10,14 +10,14 @@ Install the module in your ADF application by including dependency in `package.j
 
 ```
 "dependencies": {
-  "@keensoft/esign-cert-ng2": "1.0.0"
+  "alfresco-esign-cert-ng2": "1.0.1"
 }
 ```
 
 ... or by using command line in your app root folder
 
 ```
-$ npm install @keensoft/esign-cert-ng2 --save
+$ npm install alfresco-esign-cert-ng2 --save
 ```
 
 ** TAG Selector **
