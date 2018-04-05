@@ -3,7 +3,11 @@ esign-cert
 ==================
 Provides an Alfresco Share action for signing PDF files (PAdES-BES format) and any other file (CAdES-BES format detached) via java applet (@firma miniApplet, opensource at https://github.com/ctt-gob-es/clienteafirma) or local application AutoFirma by protocol (http://forja-ctt.administracionelectronica.gob.es/web/clienteafirma) where applets are not possible (i. e. Google Chrome).
 
-Now with an Angular 5 Component based in Alfresco ADF Framework. Available at [esign-cert-ng2](https://github.com/keensoft/alfresco-esign-cert/tree/master/esign-cert-ng2)
+# NEWS
+
+Now with an Angular 5 Component based in Alfresco ADF Framework. 
+
+Available at [esign-cert-ng2](https://github.com/keensoft/alfresco-esign-cert/tree/master/esign-cert-ng2)
 
 
 ## PREVIOUS BACKGROUND
