@@ -24,7 +24,7 @@
 	        {
 	        	str = str.concat('\nsignReason=' + unicodeEscape(signaturePurpose));
 	        }
-			
+
 			function doSign(dataToSign, signedData, signerRole) {
 				signedData.value = MiniApplet.sign(dataToSign.value, 
 						signatureAlg, 
