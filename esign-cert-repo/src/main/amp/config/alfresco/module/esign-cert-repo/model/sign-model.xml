@@ -85,6 +85,15 @@
         <aspect name="sign:fourthSignature"></aspect>
         <aspect name="sign:fifthSignature"></aspect>
         <aspect name="sign:sixthSignature"></aspect>
+
+    	<!-- Error signature properties -->
+        <aspect name="sign:signError">
+        	<properties>
+                <property name="sign:error">
+                    <type>d:text</type>
+                </property>
+            </properties> 
+        </aspect>
     </aspects>	
 	
 </model>

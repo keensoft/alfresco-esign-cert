@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.alfresco.repo.i18n.MessageService;
 import org.alfresco.model.ContentModel;
 import org.alfresco.repo.content.ContentServicePolicies;
 import org.alfresco.repo.node.NodeServicePolicies;
@@ -47,6 +48,7 @@ public class CustomBehaviour implements
 	private NodeService nodeService;
 	private VersionService versionService;
 	private ContentService contentService;
+	private MessageService messageService;
 	
 	private static final String PADES = "PAdES";
 	
@@ -144,36 +146,43 @@ public class CustomBehaviour implements
 	        ks.load(null, null);
 	        ArrayList<Map<QName, Serializable>> aspects = new ArrayList<Map<QName, Serializable>>();
 	        for (String name : names) {
-	            PdfPKCS7 pk = af.verifySignature(name);
-	            X509Certificate certificate = pk.getSigningCertificate();
-	           
-	            //Set aspect properties for each signature
-	            Map<QName, Serializable> aspectSignatureProperties = new HashMap<QName, Serializable>(); 
-	            if (pk.getSignDate() != null) aspectSignatureProperties.put(SignModel.PROP_DATE, pk.getSignDate().getTime());
-	    		aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_PRINCIPAL, certificate.getSubjectX500Principal().toString());
-	    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_SERIAL_NUMBER, certificate.getSerialNumber().toString());
-	    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_NOT_AFTER, certificate.getNotAfter());
-	    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_ISSUER, certificate.getIssuerX500Principal().toString());   
-	    	    aspects.add(aspectSignatureProperties);
+	        	try{
+		            PdfPKCS7 pk = af.verifySignature(name);
+		            X509Certificate certificate = pk.getSigningCertificate();
+		           
+		            //Set aspect properties for each signature
+		            Map<QName, Serializable> aspectSignatureProperties = new HashMap<QName, Serializable>(); 
+		            if (pk.getSignDate() != null) aspectSignatureProperties.put(SignModel.PROP_DATE, pk.getSignDate().getTime());
+		    		aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_PRINCIPAL, certificate.getSubjectX500Principal().toString());
+		    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_SERIAL_NUMBER, certificate.getSerialNumber().toString());
+		    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_NOT_AFTER, certificate.getNotAfter());
+		    	    aspectSignatureProperties.put(SignModel.PROP_CERTIFICATE_ISSUER, certificate.getIssuerX500Principal().toString());   
+		    	    aspects.add(aspectSignatureProperties);
+		    	    
+	        	}catch(Exception e){
+	        		
+	        		//Set aspect errorSign properties
+		            Map<QName, Serializable> aspectErrorSignatureProperties = new HashMap<QName, Serializable>(); 
+		            aspectErrorSignatureProperties.put(SignModel.PROP_ERROR_SIGN, messageService.getMessage("sign.error"));  
+		            nodeService.addAspect(node, SignModel.ASPECT_ERROR_SIGNATURE, aspectErrorSignatureProperties);
+	        		
+	    			logger.warn("Signature has an error or is invalid!", e);
+	        	}
 	        }
-	        
-	        // As this verification can be included in a massive operation, closing files is required
-	        is.close();
 	        
 			return aspects;
 			
 		} catch (Exception e) {
-			
-			// Closing stream (!)
-			try {
-			    if (is != null) is.close();
-			} catch (IOException ioe) {}
 			
 			// Not every PDF has a signature inside
 			logger.warn("No signature found!", e);
 			return null;
 			
 			// WARN: Do not throw this exception up, as it will break WedDAV PDF files uploading 
+		} finally {// As this verification can be included in a massive operation, closing files is required
+			try {
+			    if (is != null) is.close();
+			} catch (IOException ioe) {}
 		}
 	}
 	
@@ -217,6 +226,10 @@ public class CustomBehaviour implements
 	
 	public void setContentService(ContentService contentService) {
 		this.contentService = contentService;
+	}
+
+	public void setMessageService(MessageService messageService) {
+		this.messageService = messageService;
 	}
 
 

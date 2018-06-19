@@ -23,6 +23,7 @@
 		  <property name="nodeService" ref="NodeService" />
 		  <property name="versionService" ref="VersionService" />
 		  <property name="contentService" ref="ContentService" />
+		  <property name="messageService" ref="messageService" />
 	</bean>
 	
 	<bean id="deleteRelatedDocumentsBehaviour" class="es.keensoft.alfresco.behaviour.TransactionalDeleteBehaviour" init-method="init">

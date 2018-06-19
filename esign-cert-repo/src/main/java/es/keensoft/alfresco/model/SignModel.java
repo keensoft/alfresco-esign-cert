@@ -36,4 +36,7 @@ public class SignModel {
 	public static final QName ASPECT_FOURTH_SIGNATURE = QName.createQName(URI, "fourthSignature");
 	public static final QName ASPECT_FIFTH_SIGNATURE = QName.createQName(URI, "fifthSignature");
 	public static final QName ASPECT_SIXTH_SIGNATURE = QName.createQName(URI, "sixthSignature");
+	
+	public static final QName ASPECT_ERROR_SIGNATURE = QName.createQName(URI, "signError");
+	public static final QName PROP_ERROR_SIGN = QName.createQName(URI, "error");
 }

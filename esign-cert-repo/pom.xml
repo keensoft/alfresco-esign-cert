@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>es.keensoft.alfresco</groupId>
     <artifactId>esign-cert-repo</artifactId>
-    <version>1.7.0</version>
+    <version>1.7.1</version>
     <name>esign-cert-repo Repository AMP project</name>
     <packaging>amp</packaging>
     <description>Manages the lifecycle of the esign-cert-repo Repository AMP (Alfresco Module Package)</description>
@@ -102,6 +102,21 @@
                     <version>${alfresco.version}</version>
                     <scope>provided</scope>
                 </dependency>
+            </dependencies>
+        </profile>
+        
+        <!--
+            Brings old library iText with bc libraries to use in 5.0.d
+            if the '5.0.d' profile has been activated, needs to be activated manually.
+            -->
+        <profile>
+            <id>5.0.d</id>
+            <dependencies>
+                <dependency>
+			        <groupId>com.itextpdf</groupId>
+			        <artifactId>itextpdf</artifactId>
+			        <version>5.0.6</version>
+			    </dependency>
             </dependencies>
         </profile>
 
