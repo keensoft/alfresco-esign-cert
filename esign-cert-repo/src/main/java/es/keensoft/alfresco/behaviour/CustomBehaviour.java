@@ -7,7 +7,9 @@ import java.security.KeyStore;
 import java.security.Provider;
 import java.security.Security;
 import java.security.cert.X509Certificate;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -163,7 +165,9 @@ public class CustomBehaviour implements
 	        		
 	        		//Set aspect errorSign properties
 		            Map<QName, Serializable> aspectErrorSignatureProperties = new HashMap<QName, Serializable>(); 
-		            aspectErrorSignatureProperties.put(SignModel.PROP_ERROR_SIGN, messageService.getMessage("sign.error"));  
+		            SimpleDateFormat formatDate = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		            String date = formatDate.format(new Date());
+		            aspectErrorSignatureProperties.put(SignModel.PROP_ERROR_SIGN, messageService.getMessage("sign.error") + " - " + date);    
 		            nodeService.addAspect(node, SignModel.ASPECT_ERROR_SIGNATURE, aspectErrorSignatureProperties);
 	        		
 	    			logger.warn("Signature has an error or is invalid!", e);
