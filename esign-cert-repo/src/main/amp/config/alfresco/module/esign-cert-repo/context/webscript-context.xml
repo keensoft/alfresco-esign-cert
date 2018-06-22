@@ -74,4 +74,10 @@
         <property name="alfatecSignUtils" ref="AlfatecSignUtils" />
         <property name="waterMarkUtils" ref="WaterMarkUtils" />
     </bean> 
+    
+    <bean id="webscript.es.alfatec.getDocumentByCSV.get" class="es.alfatec.alfresco.webscripts.GetDocumentByCSV" parent="webscript">
+        <property name="nodeService" ref="NodeService" />
+        <property name="contentService" ref="ContentService" />
+        <property name="searchService" ref="SearchService" />
+    </bean> 
 </beans>

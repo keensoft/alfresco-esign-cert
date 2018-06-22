@@ -66,5 +66,20 @@
 			</form>
 		</forms>
 	</config>
+	
+	<config evaluator="aspect" condition="sign:signError">
+		<forms>
+			<form>
+				<field-visibility>
+					<show id="sign:error" />
+				</field-visibility>
+				<appearance>
+					<set id="signError" appearance="bordered-panel" label-id="panel.sign_error" />
+					<field id="sign:error" set="signError" label-id="prop.error"
+						read-only="true" />
+				</appearance>
+			</form>
+		</forms>
+	</config>
 
 </alfresco-config>
