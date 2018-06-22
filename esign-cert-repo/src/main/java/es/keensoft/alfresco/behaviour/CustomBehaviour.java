@@ -170,7 +170,7 @@ public class CustomBehaviour implements
 		            aspectErrorSignatureProperties.put(SignModel.PROP_ERROR_SIGN, messageService.getMessage("sign.error") + " - " + date);    
 		            nodeService.addAspect(node, SignModel.ASPECT_ERROR_SIGNATURE, aspectErrorSignatureProperties);
 	        		
-	    			logger.warn("Signature has an error or is invalid!", e);
+	    			logger.warn("Signature has an error or it's invalid!", e);
 	        	}
 	        }
 	        

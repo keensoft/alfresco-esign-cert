@@ -62,12 +62,12 @@ public class GetDocumentByCSV extends AbstractWebScript{
 			    	res.getOutputStream().write(nodeContent); 
 			    	res.setContentEncoding("UTF-8");
 					res.setStatus(HttpStatus.SC_OK);
-					log.info(HttpStatus.SC_OK + " - Petition has been finished. Document: " + nodeName);
+					log.info(HttpStatus.SC_OK + " - Petition has finished. Document: " + nodeName);
 				}else{
-					throw new WebScriptException("The document with CSV '" + param_csv + "' isn't exist");
+					throw new WebScriptException("The document with CSV '" + param_csv + "' isn't exists");
 				}
 			}else{
-				throw new IllegalArgumentException("The paramater csv has not received");
+				throw new IllegalArgumentException("The paramater csv has not been received");
 			}
 		
 		}catch(IllegalArgumentException e){

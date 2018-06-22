@@ -1,10 +1,10 @@
 <webscript>
   <shortname>Get document by CSV</shortname>
   <description>Get document signed by his CSV
-  To test: curl "http://localhost:8080/alfresco/service/alfatec/document-csv"
+  To test: curl "http://localhost:8080/alfresco/s/alfatec/document-csv?csv=textCSV"
   </description>
   <family>alfatec</family>
-  <url>/alfatec/document-csv</url>
+  <url>/alfatec/document-csv?csv={csv}</url>
   <format default="json">any</format>
   <authentication>user</authentication>
   <transaction>none</transaction>
