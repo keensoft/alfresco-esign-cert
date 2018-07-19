@@ -70,7 +70,11 @@ The plugin is licensed under the [LGPL v3.0](http://www.gnu.org/licenses/lgpl-3.
 Current addon release 1.6.2 is ***PROD***  
   
 **Compatibility**  
-The current version has been developed using Alfresco 5.0.d and Alfresco SDK 2.1.1, although it runs in Alfresco 5.1.x  
+The current version has been developed using Alfresco 5.0.d and Alfresco SDK 2.1.1, although it runs in Alfresco 5.1.x
+
+* Use 1.7.1 for Alfresco 201707 (aka Alfresco 5.2)
+
+* Use 1.8.0+ for Alfresco 201806 (aka Alfresco 6.0)  
   
 Browser compatibility: 100% supported (refer previous paragraph)  
   
