@@ -5,7 +5,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.security.SignatureException;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -31,9 +30,9 @@ import org.apache.log4j.Logger;
 
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfPKCS7;
 import com.itextpdf.text.pdf.PdfReader;
 import com.itextpdf.text.pdf.PdfStamper;
+import com.itextpdf.text.pdf.security.PdfPKCS7;
 
 import es.alfatec.alfresco.webscripts.bean.PrintSignatureInformation;
 import es.keensoft.alfresco.model.SignModel;
@@ -84,7 +83,7 @@ public class AlfatecSignUtils {
 		return acroFields;
 	}
 	
-	public boolean isSignOk(NodeRef document) throws IOException, AlfatecException, SignatureException{
+	public boolean isSignOk(NodeRef document) throws IOException, AlfatecException{
 		String documentName = (String)nodeService.getProperty(document, ContentModel.PROP_NAME);  	
 
 	    boolean isDocumentSigned = isDocumentSigned(document);
@@ -100,12 +99,16 @@ public class AlfatecSignUtils {
 		        }
 		        PdfPKCS7 pk = acroFields.verifySignature(name);
 		        
-		        if (pk.verify()){
-		            return true;
-		        }
-		        else{
-		            logger.warn("Sign is not valid on document "+documentName);
-		            return false;
+		        try {
+    		        if (pk.verify()){
+    		            return true;
+    		        }
+    		        else{
+    		            logger.warn("Sign is not valid on document "+documentName);
+    		            return false;
+    		        }
+		        } catch (Exception e) {
+		            throw new AlfatecException(e.getMessage(), HttpServletResponse.SC_CONFLICT);
 		        }
 		    }
 		    return false;
