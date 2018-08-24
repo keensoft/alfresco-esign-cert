@@ -44,6 +44,7 @@ import es.keensoft.alfresco.model.SignModel;
 
 public class CustomBehaviour implements 
     NodeServicePolicies.OnCreateNodePolicy,
+    NodeServicePolicies.OnMoveNodePolicy,
     ContentServicePolicies.OnContentUpdatePolicy {
 	
 	private static Log logger = LogFactory.getLog(CustomBehaviour.class);
@@ -61,6 +62,10 @@ public class CustomBehaviour implements
 		        NodeServicePolicies.OnCreateNodePolicy.QNAME,
 		        ContentModel.TYPE_CONTENT,
 		        new JavaBehaviour(this, "onCreateNode", NotificationFrequency.TRANSACTION_COMMIT));
+        policyComponent.bindClassBehaviour(
+                NodeServicePolicies.OnMoveNodePolicy.QNAME,
+                SignModel.ASPECT_SIGNED,
+                new JavaBehaviour(this, "onMoveNode", NotificationFrequency.TRANSACTION_COMMIT));
 		policyComponent.bindClassBehaviour(
 		        ContentServicePolicies.OnContentUpdatePolicy.QNAME,
 		        ContentModel.TYPE_CONTENT,
@@ -79,59 +84,83 @@ public class CustomBehaviour implements
 		processSignatures(node);
 	}
 
-	private void processSignatures(NodeRef node) {
-	    
-		ContentData contentData = (ContentData) nodeService.getProperty(node, ContentModel.PROP_CONTENT);
+
+
+	@Override
+	public void onContentUpdate(NodeRef nodeRef, boolean newContent) {
 		
-		if (contentData != null && contentData.getMimetype().equalsIgnoreCase(MimetypeMap.MIMETYPE_PDF)) {
-		    
-			ArrayList<Map<QName, Serializable>> signatures = getDigitalSignatures(node);
-			
-			if (signatures != null) {
-			    
-			    // Remove signatures from previous version
-			    removeSignatureMetadata(node);
-			    
-				// Create signatures from PDF source
-			    for (Map<QName, Serializable> aspectProperties : signatures) {
-				    
-					String originalFileName = nodeService.getProperty(node, ContentModel.PROP_NAME).toString();
-					String signatureFileName = FilenameUtils.getBaseName(originalFileName) + "-" 
-					    + System.currentTimeMillis() + "-" + PADES;
-				
-					// Creating a node reference without type (no content and no folder): remains invisible for Share
-					NodeRef signatureNodeRef = nodeService.createNode(
-							nodeService.getPrimaryParent(node).getParentRef(),
-							ContentModel.ASSOC_CONTAINS, 
-							QName.createQName(signatureFileName), 
-							ContentModel.TYPE_CMOBJECT).getChildRef();
-					
-					nodeService.createAssociation(node, signatureNodeRef, SignModel.ASSOC_SIGNATURE);
-					nodeService.createAssociation(signatureNodeRef, node, SignModel.ASSOC_DOC);
-					
-				    aspectProperties.put(SignModel.PROP_FORMAT, PADES);
-					nodeService.addAspect(signatureNodeRef, SignModel.ASPECT_SIGNATURE, aspectProperties);
-					
-				}
-			    
+	    if (nodeService.exists(nodeRef) && !newContent) {
+			processSignatures(nodeRef);
+		}
+
+	}
+	
+    @Override
+    public void onMoveNode(ChildAssociationRef from, ChildAssociationRef to) {
+        
+        for (AssociationRef signatureAssoc : nodeService.getTargetAssocs(from.getChildRef(), SignModel.ASSOC_SIGNATURE)) {
+            nodeService.moveNode(
+                    signatureAssoc.getTargetRef(), 
+                    to.getParentRef(), 
+                    ContentModel.ASSOC_CONTAINS, 
+                    QName.createQName(nodeService.getProperty(signatureAssoc.getTargetRef(), ContentModel.PROP_NAME).toString()));
+        }
+
+    }
+	
+    private void processSignatures(NodeRef node) {
+        
+        ContentData contentData = (ContentData) nodeService.getProperty(node, ContentModel.PROP_CONTENT);
+        
+        if (contentData != null && contentData.getMimetype().equalsIgnoreCase(MimetypeMap.MIMETYPE_PDF)) {
+            
+            ArrayList<Map<QName, Serializable>> signatures = getDigitalSignatures(node);
+            
+            if (signatures != null) {
+                
+                // Remove signatures from previous version
+                removeSignatureMetadata(node);
+                
+                // Create signatures from PDF source
+                for (Map<QName, Serializable> aspectProperties : signatures) {
+                    
+                    String originalFileName = nodeService.getProperty(node, ContentModel.PROP_NAME).toString();
+                    String signatureFileName = FilenameUtils.getBaseName(originalFileName) + "-" 
+                        + System.currentTimeMillis() + "-" + PADES;
+                
+                    // Creating a node reference without type (no content and no folder): remains invisible for Share
+                    NodeRef signatureNodeRef = nodeService.createNode(
+                            nodeService.getPrimaryParent(node).getParentRef(),
+                            ContentModel.ASSOC_CONTAINS, 
+                            QName.createQName(signatureFileName), 
+                            ContentModel.TYPE_CMOBJECT).getChildRef();
+                    
+                    nodeService.createAssociation(node, signatureNodeRef, SignModel.ASSOC_SIGNATURE);
+                    nodeService.createAssociation(signatureNodeRef, node, SignModel.ASSOC_DOC);
+                    
+                    aspectProperties.put(SignModel.PROP_FORMAT, PADES);
+                    nodeService.addAspect(signatureNodeRef, SignModel.ASPECT_SIGNATURE, aspectProperties);
+                    
+                }
+                
                 // Implicit signature aspect
-			    Map<QName, Serializable> aspectSignedProperties = new HashMap<QName, Serializable>(); 
+                Map<QName, Serializable> aspectSignedProperties = new HashMap<QName, Serializable>(); 
                 aspectSignedProperties.put(SignModel.PROP_TYPE, I18NUtil.getMessage("signature.implicit"));
                 nodeService.addAspect(node,  SignModel.ASPECT_SIGNED, aspectSignedProperties);
                 
-			} else {
-			    
+            } else {
+                
                 if (nodeService.hasAspect(node, SignModel.ASPECT_SIGNED)) {
                     removeSignatureMetadata(node);
                 }
-			    
-			}
-		}
-		
-	}
-	
-	private void removeSignatureMetadata(NodeRef nodeRef) {
-	    
+                
+            }
+        }
+        
+    }
+    
+    private void removeSignatureMetadata(NodeRef nodeRef) {
+        
         if (nodeService.hasAspect(nodeRef, SignModel.ASPECT_SIGNED)) {
              List<AssociationRef> targetAssocs = nodeService.getTargetAssocs(nodeRef, SignModel.ASSOC_SIGNATURE);
              for (AssociationRef targetAssoc : targetAssocs) {
@@ -145,18 +174,9 @@ public class CustomBehaviour implements
         }
         nodeService.removeAspect(nodeRef, SignModel.ASPECT_SIGNED);
 
-	}
-
-	@Override
-	public void onContentUpdate(NodeRef nodeRef, boolean newContent) {
-		
-	    if (nodeService.exists(nodeRef) && !newContent) {
-			processSignatures(nodeRef);
-		}
-
-	}
-	
-	public ArrayList<Map<QName, Serializable>> getDigitalSignatures(NodeRef node) {
+    }
+    
+    public ArrayList<Map<QName, Serializable>> getDigitalSignatures(NodeRef node) {
 		
 		InputStream is = null;
 		
@@ -263,6 +283,5 @@ public class CustomBehaviour implements
 	public void setMessageService(MessageService messageService) {
 		this.messageService = messageService;
 	}
-
 
 }
