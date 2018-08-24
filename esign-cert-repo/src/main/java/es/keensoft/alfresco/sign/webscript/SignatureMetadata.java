@@ -34,18 +34,23 @@ public class SignatureMetadata extends AbstractWebScript {
 		String reqNodeRef = req.getParameter("nodeRef");
 
 		try {
+		    
+		    if (NodeRef.isNodeRef(reqNodeRef)) {
 			
-			NodeRef nodeRef = new NodeRef(reqNodeRef);
-			response.setSignatureDate((Date)nodeService.getProperty(nodeRef, SignModel.PROP_DATE));
-			response.setSignatureFormat(nodeService.getProperty(nodeRef, SignModel.PROP_FORMAT).toString());
-			response.setCertificatePrincipal(nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_PRINCIPAL).toString());
-			response.setCertificateSerialNumber(nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_SERIAL_NUMBER).toString());
-			response.setCertificateNotAfter((Date)nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_NOT_AFTER));
-			response.setCertificateIssuer(nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_ISSUER).toString());
-			if(nodeService.getProperty(nodeRef, SignModel.PROP_SIGNATURE_PURPOSE) != null)
-			{
-				response.setSignaturePurpose(nodeService.getProperty(nodeRef, SignModel.PROP_SIGNATURE_PURPOSE).toString());
-			}
+    		    NodeRef nodeRef = new NodeRef(reqNodeRef);
+    			
+    			response.setSignatureDate((Date)nodeService.getProperty(nodeRef, SignModel.PROP_DATE));
+    			response.setSignatureFormat(nodeService.getProperty(nodeRef, SignModel.PROP_FORMAT).toString());
+    			response.setCertificatePrincipal(nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_PRINCIPAL).toString());
+    			response.setCertificateSerialNumber(nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_SERIAL_NUMBER).toString());
+    			response.setCertificateNotAfter((Date)nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_NOT_AFTER));
+    			response.setCertificateIssuer(nodeService.getProperty(nodeRef, SignModel.PROP_CERTIFICATE_ISSUER).toString());
+    			
+    			if (nodeService.getProperty(nodeRef, SignModel.PROP_SIGNATURE_PURPOSE) != null) {
+    				response.setSignaturePurpose(nodeService.getProperty(nodeRef, SignModel.PROP_SIGNATURE_PURPOSE).toString());
+    			}
+    			
+		    }
 			
 		} catch (Exception e) {
 			
