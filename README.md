@@ -67,7 +67,7 @@ This module uses a software digital certificate or a cryptographic hardware supp
 The plugin is licensed under the [LGPL v3.0](http://www.gnu.org/licenses/lgpl-3.0.html).  
   
 **State**  
-Current addon release 1.8.1 is ***PROD***  
+Current addon release 1.8.2 is ***PROD***  
   
 **Compatibility**  
 The current version has been developed using Alfresco 5.0.d and Alfresco SDK 2.1.1, although it runs in Alfresco 5.1.x
@@ -88,8 +88,8 @@ Downloading the ready-to-deploy-plugin
 --------------------------------------  
 The binary distribution is made of two amp files:  
   
-* [repo AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.6.2/esign-cert-repo.amp)  
-* [share AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.6.2/esign-cert-share.amp)  
+* [repo AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.8.2/esign-cert-repo.amp)  
+* [share AMP](https://github.com/keensoft/alfresco-esign-cert/releases/download/1.8.2/esign-cert-share.amp)  
   
 You can install them by using standard [Alfresco deployment tools](http://docs.alfresco.com/community/tasks/amp-install.html)  
   
