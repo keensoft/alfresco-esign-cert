@@ -55,6 +55,7 @@ public class TransactionalDeleteBehaviour implements NodeServicePolicies.BeforeD
 	    // Get some related nodes to work with
 	    List<NodeRef> relatedNodes = new ArrayList<NodeRef>();
 	    for (AssociationRef signatureAssoc : nodeService.getTargetAssocs(nodeRef, SignModel.ASSOC_SIGNATURE)) {
+	        relatedNodes.add(signatureAssoc.getSourceRef());
 	        relatedNodes.add(signatureAssoc.getTargetRef());
 	    }
 	
