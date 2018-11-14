@@ -2,6 +2,7 @@ package es.alfatec.alfresco.webscripts;
 
 import java.io.File;
 import java.io.IOException;
+import java.security.SignatureException;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -59,7 +60,7 @@ public class SignatureReportInfo extends AbstractWebScript {
     	}catch(AlfatecException exception){
     		response.setStatus(exception.getResultCode());
     		response.getWriter().write(exception.getExceptionMessage());
-    	}catch(IOException exception){
+    	}catch(IOException | SignatureException exception){
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     		response.getWriter().write("Opps... There was an uncontrolled error. Please contact with your support team.");
 		}finally{
