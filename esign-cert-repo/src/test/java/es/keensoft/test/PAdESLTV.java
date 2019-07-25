@@ -13,9 +13,9 @@ import java.util.Map;
 
 import org.alfresco.service.namespace.QName;
 
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.security.PdfPKCS7;
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.PdfPKCS7;
+import com.lowagie.text.pdf.PdfReader;
 
 import es.keensoft.alfresco.model.SignModel;
 

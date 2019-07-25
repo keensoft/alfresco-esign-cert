@@ -28,11 +28,11 @@ import org.alfresco.service.cmr.version.VersionService;
 import org.alfresco.util.TempFileProvider;
 import org.apache.log4j.Logger;
 
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.AcroFields;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
-import com.itextpdf.text.pdf.security.PdfPKCS7;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.pdf.AcroFields;
+import com.lowagie.text.pdf.PdfPKCS7;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
 
 import es.alfatec.alfresco.webscripts.bean.PrintSignatureInformation;
 import es.keensoft.alfresco.model.SignModel;

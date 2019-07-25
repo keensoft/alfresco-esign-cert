@@ -15,7 +15,7 @@ import org.springframework.extensions.webscripts.AbstractWebScript;
 import org.springframework.extensions.webscripts.WebScriptRequest;
 import org.springframework.extensions.webscripts.WebScriptResponse;
 
-import com.itextpdf.text.DocumentException;
+import com.lowagie.text.DocumentException;
 
 import es.alfatec.alfresco.AlfatecException;
 import es.alfatec.alfresco.AlfatecSignUtils;
