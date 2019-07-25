@@ -1,5 +1,6 @@
 package es.alfatec.alfresco;
 
+import java.awt.Color;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -7,17 +8,16 @@ import java.io.IOException;
 
 import org.alfresco.repo.i18n.MessageService;
 
-import com.itextpdf.text.BaseColor;
-import com.itextpdf.text.Chunk;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.Font;
-import com.itextpdf.text.Font.FontFamily;
-import com.itextpdf.text.Phrase;
-import com.itextpdf.text.Rectangle;
-import com.itextpdf.text.pdf.ColumnText;
-import com.itextpdf.text.pdf.PdfContentByte;
-import com.itextpdf.text.pdf.PdfReader;
-import com.itextpdf.text.pdf.PdfStamper;
+import com.lowagie.text.Chunk;
+import com.lowagie.text.DocumentException;
+import com.lowagie.text.Font;
+import com.lowagie.text.FontFactory;
+import com.lowagie.text.Phrase;
+import com.lowagie.text.Rectangle;
+import com.lowagie.text.pdf.ColumnText;
+import com.lowagie.text.pdf.PdfContentByte;
+import com.lowagie.text.pdf.PdfReader;
+import com.lowagie.text.pdf.PdfStamper;
 
 public class WaterMarkUtils {
 	private MessageService messageService;
@@ -27,15 +27,15 @@ public class WaterMarkUtils {
 	
 	// Fonts sign
 	private static final float TEXT_SIZE = 7;
-	private static final Font FONT_SIGN = new Font(FontFamily.HELVETICA, TEXT_SIZE, Font.NORMAL, BaseColor.BLACK);
+	private static final Font FONT_SIGN = FontFactory.getFont(FontFactory.HELVETICA, TEXT_SIZE, Font.NORMAL, Color.BLACK);
 	
 	// Fonts CSV
 	private static final float TEXT_SIZE_CSV_1 = 10;
-	private static final Font FONT_CSV_1 = new Font(FontFamily.HELVETICA, TEXT_SIZE_CSV_1, Font.BOLD, BaseColor.BLACK);
+	private static final Font FONT_CSV_1 = FontFactory.getFont(FontFactory.HELVETICA, TEXT_SIZE_CSV_1, Font.BOLD, Color.BLACK);
 	private static final float TEXT_SIZE_CSV_2 = 7;
-	private static final Font FONT_CSV_2 = new Font(FontFamily.HELVETICA, TEXT_SIZE_CSV_2, Font.NORMAL, BaseColor.BLACK);
+	private static final Font FONT_CSV_2 = FontFactory.getFont(FontFactory.HELVETICA, TEXT_SIZE_CSV_2, Font.NORMAL, Color.BLACK);
 	private static final float TEXT_SIZE_CSV_3 = 7;
-	private static final Font FONT_CSV_3 = new Font(FontFamily.HELVETICA, TEXT_SIZE_CSV_3, Font.NORMAL, BaseColor.BLACK);
+	private static final Font FONT_CSV_3 = FontFactory.getFont(FontFactory.HELVETICA, TEXT_SIZE_CSV_3, Font.NORMAL, Color.BLACK);
 	
 	// Sizes sign
 	private static final float RECTANGLE_SIGN_HEIGHT=33;
@@ -88,7 +88,7 @@ public class WaterMarkUtils {
 		// Rectangle sing properties
 		Rectangle signerRectangle = new Rectangle(xLowerLeft, yLowerLeft, xUppeRight, yUppeRight);
 		signerRectangle.setBorder(Rectangle.BOX);
-		signerRectangle.setBorderColor(BaseColor.DARK_GRAY);
+		signerRectangle.setBorderColor(Color.DARK_GRAY);
 		signerRectangle.setBorderWidth(1);
 		
 		// Text with sign information
@@ -194,7 +194,7 @@ public class WaterMarkUtils {
 				// Rectangle properties
 				Rectangle signerRectangle = new Rectangle(xLowerLeft, yLowerLeft, xUppeRight, yUppeRight);
 				signerRectangle.setBorder(Rectangle.BOX);
-				signerRectangle.setBorderColor(BaseColor.DARK_GRAY);
+				signerRectangle.setBorderColor(Color.DARK_GRAY);
 				signerRectangle.setBorderWidth(1);	
 				
 				// CSV Text 
