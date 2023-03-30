@@ -6,7 +6,7 @@ import java.util.Date;
 import org.alfresco.repo.content.MimetypeMap;
 import org.alfresco.service.cmr.repository.NodeRef;
 import org.alfresco.service.cmr.repository.NodeService;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.extensions.webscripts.AbstractWebScript;
@@ -54,7 +54,7 @@ public class SignatureMetadata extends AbstractWebScript {
 			
 		} catch (Exception e) {
 			
-			log.error(ExceptionUtils.getFullStackTrace(e));
+			log.error(ExceptionUtils.getRootCauseStackTrace(e));
 			throw new WebScriptException(e.getMessage(), e);
 			
 		}
