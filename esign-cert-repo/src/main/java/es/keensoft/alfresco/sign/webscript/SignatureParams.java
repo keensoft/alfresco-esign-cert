@@ -53,7 +53,7 @@ public class SignatureParams extends AbstractWebScript {
 			
 		} catch (Exception e) {
 			
-			log.error(ExceptionUtils.getFullStackTrace(e));
+			log.error(ExceptionUtils.getRootCauseStackTrace(e));
 			throw new WebScriptException(e.getMessage(), e);
 			
 		}
