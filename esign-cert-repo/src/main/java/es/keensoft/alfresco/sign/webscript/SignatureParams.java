@@ -3,7 +3,7 @@ package es.keensoft.alfresco.sign.webscript;
 import java.io.IOException;
 
 import org.alfresco.repo.content.MimetypeMap;
-import org.apache.commons.lang.exception.ExceptionUtils;
+import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.extensions.webscripts.AbstractWebScript;
@@ -53,7 +53,7 @@ public class SignatureParams extends AbstractWebScript {
 			
 		} catch (Exception e) {
 			
-			log.error(ExceptionUtils.getFullStackTrace(e));
+			log.error(ExceptionUtils.getRootCauseStackTrace(e));
 			throw new WebScriptException(e.getMessage(), e);
 			
 		}

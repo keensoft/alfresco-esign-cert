@@ -272,3 +272,4 @@ Pending features to be included (aka "wishlist"):
 * Mikel Asla  
 * Maria Tsiakmaki  
 * [Sergio Campoy](https://es.linkedin.com/in/sergio-campoy-arnau-79697568)
+* Pedro Kravetz (https://www.linkedin.com/in/pedrokravetz/)
